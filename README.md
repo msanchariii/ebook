@@ -17,19 +17,19 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Routes:
 
-`/` : Home (Hero, Buy Book and Magazines option)
-`/emagazines` : All the magazines (descending order of created at)
-`/ebooks` : All books
-`/dashboard` : All books accessible by user
+`/` : Home (Hero, Buy Book and Magazines option)  
+`/emagazines` : All the magazines (descending order of created at)  
+`/ebooks` : All books  
+`/dashboard` : All books accessible by user  
 `/dashboard/read` : Reading Page.
 
 ## API Routes:
 
-`/api/get-all-books` : Fetching All Books
-`/api/get-all-mags` : Fetching All Magazines
-`/api/book?bookId=XYZ` : Fetching a Single Book
-`/api/mag?magId=XYZ`: Fetching a Single Magazine
-`/api/add-to-dashboard?userId=XYZ&bookId=PQR` : Adding a book/magazine to dashboard after purchasing.
+`/api/get-all-books` : Fetching All Books  
+`/api/get-all-mags` : Fetching All Magazines  
+`/api/book?bookId=XYZ` : Fetching a Single Book  
+`/api/mag?magId=XYZ`: Fetching a Single Magazine  
+`/api/add-to-dashboard?userId=XYZ&bookId=PQR` : Adding a book/magazine to dashboard after purchasing.  
 `/api/get-user-dashboard?userId=XYZ` : Adding a book/magazine to dashboard after purchasing.
 
 ## DB Models:
