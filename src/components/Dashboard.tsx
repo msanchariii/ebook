@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+// User dashboard where user can view all the books it can access
 function Dashboard({ userId }: { userId: string }) {
     const [dashboardData, setDashboardData] = useState();
     const url = `/api/get-user-dashboard?userId=${userId}`;

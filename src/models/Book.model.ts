@@ -6,20 +6,27 @@ const BookSchema = new Schema({
     title: {
         type: String,
         required: true,
-        trim: true,
     },
     author: {
         type: String,
         required: true,
-        trim: true,
     },
     description: {
         type: String,
+    },
+    price: {
+        type: Number, // in rupees
+    },
+    fileLocation: {
+        type: String,
         trim: true,
     },
-    content: {
+    coverImage: {
         type: String,
         required: true,
+    },
+    isbn: {
+        type: String,
     },
     createdAt: {
         type: Date,

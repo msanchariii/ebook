@@ -8,10 +8,24 @@ const MagazineSchema = new Schema({
         required: true,
         trim: true,
     },
+    description: {
+        type: String,
+        required: true,
+    },
     edition: {
         type: String,
         required: true,
-        trim: true,
+    },
+    coverImage: {
+        type: String,
+        required: true,
+    },
+    fileLocation: {
+        type: String,
+        required: true,
+    },
+    issn: {
+        type: String,
     },
     createdAt: {
         type: Date,
