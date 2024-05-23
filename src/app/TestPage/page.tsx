@@ -8,7 +8,8 @@ function page() {
         price: 299,
         coverImage: `/sample.jpg`,
         description: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid magnam numquam obcaecati iste, deleniti cum optio illo temporibus accusantium accusamus?`,
-        createdAt: Date.now,
+        createdAt: `22 Jan`,
+        paymentButtonId: `pl_ODuonTcC9PyxQU`,
     };
     return (
         <div>
@@ -18,6 +19,7 @@ function page() {
                 price={book.price}
                 coverImage={book.coverImage}
                 description={book.description}
+                paymentButtonId={book.paymentButtonId}
             />
         </div>
     );

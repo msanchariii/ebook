@@ -42,3 +42,7 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 #### Magazine Schema:
 
 {title, description, price, fileLocation, coverImage. issn, createdAt}
+
+### Razorpay
+
+<form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_ODuonTcC9PyxQU" async> </script> </form>

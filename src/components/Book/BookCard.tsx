@@ -11,6 +11,7 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer";
+import Buy from "../Buttons/Buy";
 
 export default function BookCard({
     title,
@@ -19,37 +20,36 @@ export default function BookCard({
     coverImage,
     description,
     issn = "",
+    paymentButtonId,
 }: any) {
     return (
         <div className="bg-slate-100 shadow rounded-lg w-72 p-4 m-4">
             <div className="mx-6">
-                <Image src={coverImage} height={250} width={200} alt={title} />
+                <Image src={coverImage} height={250} width={180} alt={title} />
             </div>
             <div className="flex flex-col gap-y-1 my-2 mx-6">
-                <h2>
-                    <strong>{title}</strong>
-                </h2>
+                <h2 className="text-md font-bold">{title}</h2>
                 <p className="font-semibold text-slate-700">{author}</p>
                 <p>Rs. {price} /-</p>
             </div>
             <div>
                 <Drawer>
-                    <DrawerTrigger>
+                    <DrawerTrigger asChild className="">
                         <Button className="mx-6"> View </Button>
                     </DrawerTrigger>
                     <DrawerContent>
                         <DrawerHeader>
-                            <DrawerTitle className="mx-20 my-3">
+                            <DrawerTitle className="mx-20 my-3 text-2xl">
                                 {title}
                             </DrawerTitle>
                             <DrawerDescription className="mx-10 my-2 text-black">
                                 <div className="flex flex-col lg:flex-row ">
-                                    <div className="">
+                                    <div className="mr-4">
                                         <Image
                                             className="mx-10"
                                             src={coverImage}
                                             height={300}
-                                            width={300}
+                                            width={250}
                                             alt={title}
                                         />
                                     </div>
@@ -69,7 +69,11 @@ export default function BookCard({
                                         </p>
 
                                         <Button className="w-16">Buy</Button>
-                                        <DrawerClose className="w-16">
+                                        {/* <Buy
+                                            paymentButtonId={paymentButtonId}
+                                        /> */}
+
+                                        <DrawerClose asChild className="w-16">
                                             <Button
                                                 className="bg-red-800 hover:bg-red-700"
                                                 variant="default"
