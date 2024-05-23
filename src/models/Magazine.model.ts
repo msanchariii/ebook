@@ -12,9 +12,8 @@ const MagazineSchema = new Schema({
         type: String,
         required: true,
     },
-    edition: {
-        type: String,
-        required: true,
+    price: {
+        type: Number, // in rupees
     },
     coverImage: {
         type: String,

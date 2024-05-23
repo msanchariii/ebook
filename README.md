@@ -30,6 +30,15 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 `/api/book?bookId=XYZ` : Fetching a Single Book  
 `/api/mag?magId=XYZ`: Fetching a Single Magazine  
 `/api/add-to-dashboard?userId=XYZ&bookId=PQR` : Adding a book/magazine to dashboard after purchasing.  
-`/api/get-user-dashboard?userId=XYZ` : Fetching user dashboard (accessible books).
+`/api/get-user-dashboard?userId=XYZ` : Fetching user dashboard (accessible books).  
+`/api/check-access` : Checking if user has access to a book/magazine.
 
 ## DB Models:
+
+#### Book Schema:
+
+{title, author, description, price fileLocation, coverImage. isbn, createdAt}
+
+#### Magazine Schema:
+
+{title, description, price, fileLocation, coverImage. issn, createdAt}
