@@ -1,6 +1,7 @@
 import React from "react";
 
-function BookCard() {
+function BookCard(book: any) {
+    const { title, author } = book;
     return <></>;
 }
 
