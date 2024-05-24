@@ -1,9 +1,13 @@
+import BookCard from "@/components/Book/BookCard";
 import { Button } from "@/components/ui/button";
+import { auth } from "@clerk/nextjs/server";
+import Link from "next/link";
 import React from "react";
 
 async function page() {
     const response = await fetch(`${process.env.BASE_URL}/api/get-all-books`);
     const responseData = await response.json();
+    const { userId } = auth();
     let books;
     if (responseData.success) {
         books = responseData.data;
@@ -14,16 +18,24 @@ async function page() {
             <div>
                 {books &&
                     books.length > 0 &&
-                    books.map((book: any) => (
-                        <div
-                            key={book._id}
-                            className="bg-yellow-200 w-1/3 p-4 rounded-lg flex flex-col gap-y-2"
-                        >
-                            <h1 className="font-bold">{book.title}</h1>
-                            <p>{book.description}</p>
-                            <Button className="w-20">Buy</Button>
-                        </div>
-                    ))}
+                    books.map((book: any) => {
+                        console.log(book);
+                        console.log(book.coverImage);
+
+                        return (
+                            <div key={book._id} className="">
+                                <BookCard
+                                    bookId={book._id}
+                                    userId={userId}
+                                    title={book.title}
+                                    author={book.author}
+                                    price={book.price}
+                                    coverImage={book.coverImage}
+                                    description={book.description}
+                                ></BookCard>
+                            </div>
+                        );
+                    })}
             </div>
         </div>
     );

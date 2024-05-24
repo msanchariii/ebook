@@ -12,15 +12,17 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import Buy from "../Buttons/Buy";
+import Link from "next/link";
 
 export default function BookCard({
+    bookId,
+    userId,
     title,
     author,
     price,
     coverImage,
     description,
     issn = "",
-    paymentButtonId,
 }: any) {
     return (
         <div className="bg-slate-100 shadow rounded-lg w-72 p-4 m-4">
@@ -68,7 +70,14 @@ export default function BookCard({
                                             /-
                                         </p>
 
-                                        <Button className="w-16">Buy</Button>
+                                        {/* <Button className="w-16">Buy</Button> */}
+                                        <Button className="w-20">
+                                            <Link
+                                                href={`/checkout?amount=${price}&bookId=${bookId}&userId=${userId}`}
+                                            >
+                                                Buy
+                                            </Link>
+                                        </Button>
                                         {/* <Buy
                                             paymentButtonId={paymentButtonId}
                                         /> */}
