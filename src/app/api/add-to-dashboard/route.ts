@@ -2,13 +2,13 @@ import { response } from "@/helpers/ApiRespone";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User.model";
 
-// URL : /api/get-user-dashboard?userId=
+// URL : /api/add-user-dashboard?userId=XYZ&bookId=PQR
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url); // getting queries
         const userID = searchParams.get("userId");
         const bookId = searchParams.get("bookId");
-        
+
         if (!userID || !bookId) {
             return response({
                 success: false,
