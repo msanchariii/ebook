@@ -25,7 +25,7 @@ function Dashboard({
         };
         getDashboard();
         console.log(dashboardData);
-    }, [url, userId]);
+    }, [url, userId, dashboardData]);
     if (!userId) {
         return <></>;
     }

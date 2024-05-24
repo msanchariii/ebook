@@ -140,7 +140,7 @@ export default function Checkout() {
                     <CardHeader>
                         <CardTitle className="my-4">Continue</CardTitle>
                         <CardDescription>
-                            By clicking on pay you'll purchase the book.
+                            By clicking on pay you will purchase the book.
                             <p>
                                 Amount to Pay: <strong>Rs. {amount} /-</strong>
                             </p>
