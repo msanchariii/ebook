@@ -18,17 +18,19 @@ export default function Checkout() {
     const router = useRouter();
     const params = useSearchParams();
     const amount = params.get("amount");
+    const userId = params.get("userId");
+    const bookId = params.get("bookId");
     const [loading1, setLoading1] = React.useState(true);
     const [loading, setLoading] = React.useState(false);
     const idRef = React.useRef();
 
     React.useEffect(() => {
-        if (!amount) {
+        if (!amount || !userId || !bookId) {
             router.replace("/");
         }
         createOrderId();
     }, []);
-
+    // Create order ID
     const createOrderId = async () => {
         try {
             const response = await fetch("/api/order", {
@@ -57,6 +59,13 @@ export default function Checkout() {
             );
         }
     };
+    // add-to-dashboard
+    async function buyBook(user: string, book: string) {
+        const response = await fetch(
+            `${process.env.BASE_URL}/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
+        );
+    }
+    // process Payment
     const processPayment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
@@ -85,9 +94,13 @@ export default function Checkout() {
                     });
                     const res = await result.json();
                     //process further request, whatever should happen after request fails
-                    if (res.isOk)
+
+                    if (res.isOk) {
                         alert(res.message); //process further request after
-                    else {
+                        console.log("PAYMENT SUCCESSFULL.");
+
+                        buyBook(userId!, bookId!);
+                    } else {
                         alert(res.message);
                     }
                 },
@@ -105,6 +118,7 @@ export default function Checkout() {
             console.error(error);
         }
     };
+
     if (loading1)
         return (
             <div className="container h-screen flex justify-center items-center">
@@ -126,8 +140,10 @@ export default function Checkout() {
                     <CardHeader>
                         <CardTitle className="my-4">Continue</CardTitle>
                         <CardDescription>
-                            By clicking on pay you'll purchase your plan
-                            subscription of Rs {amount}/month
+                            By clicking on pay you'll purchase the book.
+                            <p>
+                                Amount to Pay: <strong>Rs. {amount} /-</strong>
+                            </p>
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
