@@ -12,10 +12,6 @@ function Dashboard({
     const [dashboardData, setDashboardData] = useState();
     const url = `/api/get-user-dashboard?userId=${userId}`;
 
-    if (!userId) {
-        return <></>;
-    }
-
     useEffect(() => {
         const getDashboard = async () => {
             try {
@@ -30,6 +26,9 @@ function Dashboard({
         getDashboard();
         console.log(dashboardData);
     }, [url, userId]);
+    if (!userId) {
+        return <></>;
+    }
     return (
         <div>
             Dashboard
