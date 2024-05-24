@@ -87,6 +87,10 @@ export default function Checkout() {
                         razorpayOrderId: response.razorpay_order_id,
                         razorpaySignature: response.razorpay_signature,
                     };
+                    // FIXME:
+                    if (data.razorpayPaymentId) {
+                        await buyBook(userId!, bookId!);
+                    }
 
                     const result = await fetch("/api/verify", {
                         method: "POST",
