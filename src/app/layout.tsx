@@ -25,12 +25,12 @@ export default function RootLayout({
             <html lang="en">
                 <body
                     className={cn(
-                        "min-h-screen w-screen bg-background font-sans antialiased",
+                        "min-h-screen bg-background font-sans antialiased",
                         fontSans.variable
                     )}
                 >
                     <Navbar />
-                    <main className="min-h-screen m-4">{children}</main>
+                    <main className="min-h-screen p-4">{children}</main>
                 </body>
             </html>
         </ClerkProvider>
