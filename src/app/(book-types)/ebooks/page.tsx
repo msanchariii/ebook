@@ -1,10 +1,12 @@
 import BookCard from "@/components/Book/BookCard";
 import { Button } from "@/components/ui/button";
 import { auth } from "@clerk/nextjs/server";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
 
 async function page() {
+    cookies();
     const response = await fetch(`${process.env.BASE_URL}/api/get-all-books`, {
         cache: "no-store",
     });
