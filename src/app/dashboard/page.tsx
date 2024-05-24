@@ -1,11 +1,12 @@
 import Dashboard from "@/components/Dashboard";
+import { Button } from "@/components/ui/button";
 import dbConnect from "@/lib/dbConnect";
 import Book from "@/models/Book.model";
 import { auth } from "@clerk/nextjs/server";
+import Link from "next/link";
 
 async function page() {
     const { userId } = auth();
-
     if (!userId) {
         return (
             <>
@@ -28,7 +29,6 @@ async function page() {
 
     await dbConnect();
 
-    // Find all books by their IDs using the $in operator
     let myBooks;
     if (myBookIds.length > 0) {
         myBooks = await Book.find({ _id: { $in: myBookIds } });
@@ -37,10 +37,15 @@ async function page() {
     return (
         <Dashboard userId={userId}>
             {myBooks?.map((book) => (
-                <div key={book._id} className="my-4">
-                    <h1>{book.title}</h1>
+                <div
+                    key={book._id}
+                    className="my-4 flex flex-col gap-y-2 bg-yellow-200 w-1/3 p-4 rounded-lg mx-1"
+                >
+                    <h1 className="font-semibold">{book.title}</h1>
                     <p>{book.author}</p>
-                    {/* Add more book details as needed */}
+                    <Button>
+                        <Link href={`/dashboard/read/${book._id}`}>Read</Link>
+                    </Button>
                 </div>
             ))}
         </Dashboard>

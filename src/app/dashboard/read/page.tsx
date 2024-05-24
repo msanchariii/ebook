@@ -9,10 +9,9 @@ interface BookInterface {
 }
 
 function page() {
-    const file = `https://cdn.jsdelivr.net/gh/msanchariii/pdfs@master/JennaRainey.pdf`;
     return (
         <div>
-            <ReadBook file={file} />
+            <div>No Book to Fetch</div>
         </div>
     );
 }
