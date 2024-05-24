@@ -16,7 +16,7 @@ async function page() {
     }
 
     const response = await fetch(
-        `http://localhost:3000/api/get-user-dashboard?userId=${userId}`,
+        `${process.env.BASE_URL}/api/get-user-dashboard?userId=${userId}`,
         { cache: "no-store" }
     );
     const responseData = await response.json();
