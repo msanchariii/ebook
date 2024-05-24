@@ -8,6 +8,7 @@ import "react-pdf/dist/esm/Page/TextLayer.css";
 
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import { Button } from "../ui/button";
+import axios from "axios";
 // import "./Sample.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
