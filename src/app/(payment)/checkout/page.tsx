@@ -13,6 +13,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { LoaderCircle } from "lucide-react";
+import PleaseLogIn from "@/components/PleaseLogIn";
 
 export default function Checkout() {
     const router = useRouter();
@@ -125,13 +126,15 @@ export default function Checkout() {
                 <LoaderCircle className=" animate-spin h-20 w-20 text-primary" />
             </div>
         );
+    if (!userId) {
+        return <PleaseLogIn />;
+    }
     return (
         <>
             <Script
                 id="razorpay-checkout-js"
                 src="https://checkout.razorpay.com/v1/checkout.js"
             />
-
             <section className="container h-screen flex flex-col justify-center items-center gap-10">
                 <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight">
                     Checkout

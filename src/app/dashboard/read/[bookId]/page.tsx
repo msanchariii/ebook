@@ -12,7 +12,7 @@ async function page({ params }: { params: { bookId: string } }) {
     const encodedBookId = encodeURIComponent(bookId);
     const url = `${process.env.BASE_URL}/api/check-access?userId=${encodedUserId}&bookId=${encodedBookId}`;
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, { cache: "no-store" });
         const responseData = await response.json();
         console.log(responseData);
 

@@ -5,7 +5,9 @@ import Link from "next/link";
 import React from "react";
 
 async function page() {
-    const response = await fetch(`${process.env.BASE_URL}/api/get-all-books`);
+    const response = await fetch(`${process.env.BASE_URL}/api/get-all-books`, {
+        cache: "no-store",
+    });
     const responseData = await response.json();
     const { userId } = auth();
     let books;
