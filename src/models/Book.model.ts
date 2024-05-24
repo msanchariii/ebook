@@ -28,9 +28,9 @@ const BookSchema = new Schema({
     isbn: {
         type: String,
     },
-    paymentButtonId: {
-        type: String,
-    },
+    // paymentButtonId: {
+    //     type: String,
+    // },
     createdAt: {
         type: Date,
         default: Date.now,

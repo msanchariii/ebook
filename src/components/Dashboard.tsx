@@ -2,7 +2,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 // User dashboard where user can view all the books it can access
-function Dashboard({ userId }: { userId: string }) {
+function Dashboard({
+    userId,
+    children,
+}: {
+    userId: string;
+    children: React.ReactNode;
+}) {
     const [dashboardData, setDashboardData] = useState();
     const url = `/api/get-user-dashboard?userId=${userId}`;
 
@@ -24,7 +30,12 @@ function Dashboard({ userId }: { userId: string }) {
         getDashboard();
         console.log(dashboardData);
     }, [url, userId]);
-    return <div>Dashboard</div>;
+    return (
+        <div>
+            Dashboard
+            <>{children}</>
+        </div>
+    );
 }
 
 export default Dashboard;
