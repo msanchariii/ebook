@@ -22,8 +22,12 @@ export default function BookCard({
     price,
     coverImage,
     description,
-    issn = "",
+    paymentLink,
+    issn,
 }: any) {
+    const paymentURL = paymentLink
+        ? paymentLink
+        : `/checkout?amount=${price}&bookId=${bookId}&userId=${userId}`;
     return (
         <div className="bg-slate-100 shadow rounded-lg w-72 p-4 m-4">
             <div className="mx-6">
@@ -62,9 +66,12 @@ export default function BookCard({
                                         <p>
                                             <strong>Author:</strong> {author}
                                         </p>
-                                        <p>
-                                            <strong>ISSN: </strong> {issn}
-                                        </p>
+                                        {issn && (
+                                            <p>
+                                                <strong>ISBN: </strong> {issn}
+                                            </p>
+                                        )}
+
                                         <p>
                                             <strong>Price: </strong> Rs. {price}
                                             /-
@@ -72,11 +79,7 @@ export default function BookCard({
 
                                         {/* <Button className="w-16">Buy</Button> */}
                                         <Button className="w-20">
-                                            <Link
-                                                href={`/checkout?amount=${price}&bookId=${bookId}&userId=${userId}`}
-                                            >
-                                                Buy
-                                            </Link>
+                                            <Link href={paymentURL}>Buy</Link>
                                         </Button>
                                         {/* <Buy
                                             paymentButtonId={paymentButtonId}

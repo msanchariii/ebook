@@ -24,7 +24,7 @@ async function page() {
                     books.length > 0 &&
                     books.map((book: any) => {
                         console.log(book);
-                        console.log(book.coverImage);
+                        // console.log(book.coverImage);
 
                         return (
                             <div key={book._id} className="">
@@ -36,6 +36,7 @@ async function page() {
                                     price={book.price}
                                     coverImage={book.coverImage}
                                     description={book.description}
+                                    paymentLink={book.paymentLink}
                                 ></BookCard>
                             </div>
                         );
