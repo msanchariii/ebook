@@ -70,13 +70,13 @@ export default function Example() {
                         ))}
                     </ul>
                 </div>
-                <div className="hidden lg:block w-[200px]">
+                <div className="hidden lg:block w-[200px] relative">
                     {isMounted && (
-                        <div className="">
+                        <div className="flex flex-end relative float-right">
                             <SignedIn>
                                 <div className="flex">
                                     <Button
-                                        className="bg-slate-600 hover:bg-slate-500 mx-4 my-1"
+                                        className="bg-emerald-700 hover:bg-emerald-600 mx-4 my-1"
                                         variant="default"
                                     >
                                         <Link href={`/dashboard`}>
@@ -153,16 +153,16 @@ export default function Example() {
                                 {isMounted && (
                                     <>
                                         <SignedIn>
-                                            <div className="flex">
+                                            <div className="flex my-6">
                                                 <Button
-                                                    className=""
+                                                    className="mx-2 bg-emerald-700 hover:bg-emerald-600"
                                                     variant="default"
                                                 >
                                                     <Link href={`/dashboard`}>
                                                         Dashboard
                                                     </Link>
                                                 </Button>
-                                                <div className="p-1 m-1">
+                                                <div className="p-1 mx-2">
                                                     <UserButton></UserButton>
                                                 </div>
                                             </div>
@@ -170,7 +170,7 @@ export default function Example() {
                                         <SignedOut>
                                             <SignInButton mode="modal">
                                                 <Button
-                                                    className="w-full my-2"
+                                                    className="w-full my-6 mx-2"
                                                     variant="default"
                                                 >
                                                     Sign in

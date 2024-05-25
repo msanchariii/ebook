@@ -26,6 +26,9 @@ const MagazineSchema = new Schema({
     issn: {
         type: String,
     },
+    paymentLink: {
+        type: String,
+    },
     createdAt: {
         type: Date,
         default: Date.now,

@@ -19,18 +19,16 @@ const BookSchema = new Schema({
     },
     fileLocation: {
         type: String,
-        trim: true,
     },
     coverImage: {
         type: String,
-        required: true,
     },
     isbn: {
         type: String,
     },
-    // paymentButtonId: {
-    //     type: String,
-    // },
+    paymentLink: {
+        type: String,
+    },
     createdAt: {
         type: Date,
         default: Date.now,
