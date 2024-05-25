@@ -12,6 +12,7 @@ async function page() {
     });
     const responseData = await response.json();
     const { userId } = auth();
+
     let books;
     if (responseData.success) {
         books = responseData.data;

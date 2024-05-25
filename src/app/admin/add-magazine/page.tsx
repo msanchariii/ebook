@@ -89,6 +89,7 @@ function Page() {
                         onChange={handleChange}
                         placeholder="Title"
                         required
+                        autoComplete="false"
                     />
 
                     <Label htmlFor="description">Description</Label>
@@ -100,6 +101,7 @@ function Page() {
                         placeholder="Enter your description here."
                         rows={5}
                         required
+                        autoComplete="false"
                     />
 
                     <Label htmlFor="price">Price In Rupees</Label>
@@ -111,6 +113,7 @@ function Page() {
                         onChange={handleChange}
                         placeholder="20"
                         required
+                        autoComplete="false"
                     />
                     <div className="bg-yellow-100 p-2 rounded-lg">
                         <Label htmlFor="">
@@ -137,6 +140,7 @@ function Page() {
                         onChange={handleChange}
                         placeholder="Cover Image"
                         required
+                        autoComplete="false"
                     />
 
                     <Label htmlFor="fileLocation">File Location Link</Label>
@@ -148,6 +152,7 @@ function Page() {
                         onChange={handleChange}
                         placeholder="File"
                         required
+                        autoComplete="false"
                     />
 
                     <Label htmlFor="issn">ISSN (Optional)</Label>
@@ -158,6 +163,7 @@ function Page() {
                         value={formData.issn}
                         onChange={handleChange}
                         placeholder="ISSN"
+                        autoComplete="false"
                     />
 
                     <Label htmlFor="paymentLink">
@@ -170,6 +176,7 @@ function Page() {
                         value={formData.paymentLink}
                         onChange={handleChange}
                         placeholder="Payment Link"
+                        autoComplete="false"
                     />
                 </div>
                 <Button type="submit" className="w-24" disabled={isLoading}>

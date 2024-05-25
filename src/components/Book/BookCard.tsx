@@ -6,13 +6,25 @@ import {
     DrawerClose,
     DrawerContent,
     DrawerDescription,
-    DrawerFooter,
     DrawerHeader,
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer";
-import Buy from "../Buttons/Buy";
 import Link from "next/link";
+
+interface BookCardProps {
+    bookId: string;
+    userId?: string | null;
+    title: string;
+    author?: string; // Optional field
+    description: string;
+    price: number;
+    coverImage: string;
+    paymentLink: string;
+    issn?: string; // Optional field
+    isbn?: string; // Optional field
+    createdAt?: Date; // Optional field
+}
 
 export default function BookCard({
     bookId,
@@ -24,10 +36,22 @@ export default function BookCard({
     description,
     paymentLink,
     issn,
-}: any) {
-    const paymentURL = paymentLink
-        ? paymentLink
-        : `/checkout?amount=${price}&bookId=${bookId}&userId=${userId}`;
+    isbn,
+    createdAt,
+}: BookCardProps) {
+    let paymentURL;
+    if (userId) {
+        paymentURL = paymentLink
+            ? paymentLink
+            : `/checkout?amount=${price}&bookId=${bookId}&userId=${userId}`;
+    }
+
+    const formatDate = (date: Date) => {
+        const year = date.getFullYear();
+        const month = date.toLocaleString("default", { month: "long" });
+        return `${month} ${year}`;
+    };
+
     return (
         <div className="bg-slate-100 shadow rounded-lg w-72 p-4 m-4">
             <div className="mx-6">
@@ -35,12 +59,14 @@ export default function BookCard({
             </div>
             <div className="flex flex-col gap-y-1 my-2 mx-6">
                 <h2 className="text-md font-bold">{title}</h2>
-                <p className="font-semibold text-slate-700">{author}</p>
+                {author && (
+                    <p className="font-semibold text-slate-700">{author}</p>
+                )}
                 <p>Rs. {price} /-</p>
             </div>
             <div>
                 <Drawer>
-                    <DrawerTrigger asChild className="">
+                    <DrawerTrigger asChild>
                         <Button className="mx-6"> View </Button>
                     </DrawerTrigger>
                     <DrawerContent>
@@ -49,7 +75,7 @@ export default function BookCard({
                                 {title}
                             </DrawerTitle>
                             <DrawerDescription className="mx-10 my-2 text-black">
-                                <div className="flex flex-col lg:flex-row ">
+                                <div className="flex flex-col lg:flex-row">
                                     <div className="mr-4">
                                         <Image
                                             className="mx-10"
@@ -60,44 +86,59 @@ export default function BookCard({
                                         />
                                     </div>
                                     <div className="mx-10 my-3 flex flex-col gap-6 text-left">
-                                        {/* <h2>{title}</h2> */}
                                         <strong>Description: </strong>
                                         <p>{description}</p>
-                                        <p>
-                                            <strong>Author:</strong> {author}
-                                        </p>
-                                        {issn && (
+                                        {author && (
                                             <p>
-                                                <strong>ISBN: </strong> {issn}
+                                                <strong>Author:</strong>{" "}
+                                                {author}
                                             </p>
                                         )}
-
+                                        {issn && (
+                                            <p>
+                                                <strong>ISSN: </strong> {issn}
+                                            </p>
+                                        )}
+                                        {isbn && (
+                                            <p>
+                                                <strong>ISBN: </strong> {isbn}
+                                            </p>
+                                        )}
+                                        {createdAt && (
+                                            <p>
+                                                <strong>Published: </strong>{" "}
+                                                {formatDate(
+                                                    new Date(createdAt)
+                                                )}
+                                            </p>
+                                        )}
                                         <p>
-                                            <strong>Price: </strong> Rs. {price}
+                                            <strong>Price: </strong> Rs. {price}{" "}
                                             /-
                                         </p>
-
-                                        {/* <Button className="w-16">Buy</Button> */}
                                         <Button className="w-20">
-                                            <Link href={paymentURL}>Buy</Link>
+                                            <Link
+                                                href={
+                                                    paymentURL
+                                                        ? paymentURL
+                                                        : `/sign-in`
+                                                }
+                                            >
+                                                Buy
+                                            </Link>
                                         </Button>
-                                        {/* <Buy
-                                            paymentButtonId={paymentButtonId}
-                                        /> */}
-
-                                        <DrawerClose asChild className="w-16">
+                                        <DrawerClose asChild>
                                             <Button
                                                 className="bg-red-800 hover:bg-red-700"
                                                 variant="default"
                                             >
-                                                CLose
+                                                Close
                                             </Button>
                                         </DrawerClose>
                                     </div>
                                 </div>
                             </DrawerDescription>
                         </DrawerHeader>
-                        <DrawerFooter></DrawerFooter>
                     </DrawerContent>
                 </Drawer>
             </div>
