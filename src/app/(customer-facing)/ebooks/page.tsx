@@ -37,7 +37,7 @@ async function page() {
                                     price={book.price}
                                     coverImage={book.coverImage}
                                     description={book.description}
-                                    paymentLink={book.paymentLink}
+                                    // paymentLink={book.paymentLink}
                                 ></BookCard>
                             </div>
                         );

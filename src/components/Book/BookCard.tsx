@@ -20,7 +20,7 @@ interface BookCardProps {
     description: string;
     price: number;
     coverImage: string;
-    paymentLink: string;
+    paymentLink?: string;
     issn?: string; // Optional field
     isbn?: string; // Optional field
     createdAt?: Date; // Optional field
@@ -43,7 +43,7 @@ export default function BookCard({
     if (userId) {
         paymentURL = paymentLink
             ? paymentLink
-            : `/checkout?amount=${price}&bookId=${bookId}&userId=${userId}`;
+            : `/checkout?amount=${1}&bookId=${bookId}&userId=${userId}`;
     }
 
     const formatDate = (date: Date) => {

@@ -99,11 +99,17 @@ export default function Checkout() {
                     });
                     const res = await result.json();
                     //process further request, whatever should happen after request fails
+                    // https://api.razorpay.com/v1/payments/{pay_id}
 
                     if (res.isOk) {
                         alert(res.message); //process further request after
                         console.log("PAYMENT SUCCESSFULL.");
-
+                        const payment = await fetch(
+                            `https://api.razorpay.com/v1/payments/${data.razorpayPaymentId}`
+                        );
+                        const paymentData = await payment.json();
+                        console.log(payment);
+                        console.log(paymentData);
                         buyBook(userId!, bookId!);
                     } else {
                         alert(res.message);
