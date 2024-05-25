@@ -8,6 +8,7 @@ export async function POST(request: Request) {
         const paymentEntity = data.payload.payment.entity; // razorpay
         // console.log("Email:", paymentEntity.email);
         const { email, status } = paymentEntity;
+        const issue = paymentEntity.issue?.toLowerCase();
         console.log(email); // retrived
 
         const { searchParams } = new URL(request.url);
@@ -28,7 +29,7 @@ export async function POST(request: Request) {
         }
         console.log("User found");
         if (type === "book") {
-            user.books.push(itemId);
+            if (issue === "may 2024") user.books.push(itemId);
             await user.save();
             return response({
                 message: "Book added to user dashboard.",
