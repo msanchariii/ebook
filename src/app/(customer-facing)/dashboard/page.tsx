@@ -2,11 +2,19 @@ import Dashboard from "@/components/Dashboard";
 import { Button } from "@/components/ui/button";
 import dbConnect from "@/lib/dbConnect";
 import Book from "@/models/Book.model";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 
 async function page() {
     const { userId } = auth();
+    console.log("USER ID:", userId);
+
+    // console.log(sessionId);
+    const user = await currentUser();
+    // console.log(user);
+    const email = user?.emailAddresses[0].emailAddress;
+    console.log("Email: ", email);
+
     if (!userId) {
         return (
             <>
@@ -16,7 +24,7 @@ async function page() {
     }
 
     const response = await fetch(
-        `${process.env.BASE_URL}/api/get-user-dashboard?userId=${userId}`,
+        `${process.env.BASE_URL}/api/get-user-dashboard?userId=${userId}&userEmail=${email}`,
         { cache: "no-store" }
     );
     const responseData = await response.json();

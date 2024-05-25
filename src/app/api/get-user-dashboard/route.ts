@@ -7,6 +7,7 @@ export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url); // getting queries
         const userID = searchParams.get("userId");
+        const userEmail = searchParams.get("userEmail");
         if (!userID) {
             return response({
                 success: false,
@@ -24,7 +25,9 @@ export async function GET(request: Request) {
             // user doesn't exist in DB. We need to create one.
             user = new User({
                 clerkId,
+                email: userEmail,
                 books: [],
+                mags: [],
             });
             await user.save();
 
