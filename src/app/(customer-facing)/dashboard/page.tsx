@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import dbConnect from "@/lib/dbConnect";
 import Book from "@/models/Book.model";
 import { auth, currentUser } from "@clerk/nextjs/server";
+import { cookies } from "next/headers";
 import Link from "next/link";
 
 async function page() {
+    cookies();
     const { userId } = auth();
     console.log("USER ID:", userId);
 

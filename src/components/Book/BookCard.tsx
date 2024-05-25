@@ -24,6 +24,7 @@ interface BookCardProps {
     issn?: string; // Optional field
     isbn?: string; // Optional field
     createdAt?: Date; // Optional field
+    type?: string;
 }
 
 export default function BookCard({
@@ -38,12 +39,13 @@ export default function BookCard({
     issn,
     isbn,
     createdAt,
+    type,
 }: BookCardProps) {
     let paymentURL;
     if (userId) {
         paymentURL = paymentLink
             ? paymentLink
-            : `/checkout?amount=${1}&bookId=${bookId}&userId=${userId}`;
+            : `/checkout?type=${type}&id=${bookId}`;
     }
 
     const formatDate = (date: Date) => {

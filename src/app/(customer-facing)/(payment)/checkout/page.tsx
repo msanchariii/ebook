@@ -1,6 +1,5 @@
 "use client";
 import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -14,72 +13,103 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { LoaderCircle } from "lucide-react";
 import PleaseLogIn from "@/components/PleaseLogIn";
+import { useAuth } from "@clerk/nextjs";
 
 export default function Checkout() {
+    const searchParams = useSearchParams();
+    const { userId } = useAuth();
     const router = useRouter();
-    const params = useSearchParams();
-    const amount = params.get("amount");
-    const userId = params.get("userId");
-    const bookId = params.get("bookId");
+    const [amount, setAmount] = React.useState(null); // state for amount
+    // state for successful payment
+
+    const bookId = searchParams.get("id");
+    const type = searchParams.get("type");
+
     const [loading1, setLoading1] = React.useState(true);
     const [loading, setLoading] = React.useState(false);
+
     const idRef = React.useRef();
 
+    const key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!;
+
+    // fetch book data
     React.useEffect(() => {
-        if (!amount || !userId || !bookId) {
-            router.replace("/");
-        }
-        createOrderId();
-    }, []);
-    // Create order ID
-    const createOrderId = async () => {
-        try {
-            const response = await fetch("/api/order", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    amount: parseFloat(amount!) * 100,
-                }),
-            });
-
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
+        const fetchPrice = async () => {
+            try {
+                const response = await fetch(
+                    `/api/get-price?type=${type}&id=${bookId}`
+                );
+                const responseData = await response.json();
+                const price = responseData?.data?.price;
+                if (price) {
+                    setAmount(price.toString());
+                }
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+            } catch (error) {
+                console.error("Error fetching price :: ", error);
             }
+        };
+        fetchPrice();
+    }, [bookId, type]);
 
-            const data = await response.json();
-            const id = data.orderId;
-            idRef.current = id;
-            setLoading1(false);
-            return;
-        } catch (error) {
-            console.error(
-                "There was a problem with your fetch operation:",
-                error
-            );
+    // create order id
+    React.useEffect(() => {
+        if (amount) {
+            const createOrderId = async () => {
+                try {
+                    const response = await fetch("/api/order", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            amount: parseFloat(amount) * 100,
+                        }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+
+                    const data = await response.json();
+                    const id = data.orderId;
+                    idRef.current = id;
+                    setLoading1(false);
+                } catch (error) {
+                    console.error(
+                        "There was a problem with your fetch operation:",
+                        error
+                    );
+                }
+            };
+            createOrderId();
         }
-    };
-    // add-to-dashboard
-    async function buyBook(user: string, book: string) {
-        const response = await fetch(
-            `${process.env.BASE_URL}/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
-        );
-    }
-    // process Payment
+    }, [amount]);
+
     const processPayment = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         const orderId = idRef.current;
-        console.log(orderId);
+
+        async function buyBook() {
+            await fetch(
+                `${process.env.BASE_URL}/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
+            );
+        }
+
         try {
             const options = {
-                key: process.env.key_id,
+                key: key_id,
                 amount: parseFloat(amount!) * 100,
                 currency: "INR",
-                name: "Payment", //busniess name
+                name: "Payment",
                 description: "Payment",
                 order_id: orderId,
+                theme: {
+                    color: "#3399cc",
+                },
                 handler: async function (response: any) {
                     const data = {
                         orderCreationId: orderId,
@@ -87,38 +117,30 @@ export default function Checkout() {
                         razorpayOrderId: response.razorpay_order_id,
                         razorpaySignature: response.razorpay_signature,
                     };
-                    // FIXME:
-                    if (data.razorpayPaymentId) {
-                        await buyBook(userId!, bookId!);
-                    }
 
                     const result = await fetch("/api/verify", {
                         method: "POST",
                         body: JSON.stringify(data),
                         headers: { "Content-Type": "application/json" },
                     });
-                    const res = await result.json();
-                    //process further request, whatever should happen after request fails
-                    // https://api.razorpay.com/v1/payments/{pay_id}
 
+                    const res = await result.json();
                     if (res.isOk) {
-                        alert(res.message); //process further request after
-                        console.log("PAYMENT SUCCESSFULL.");
-                        const payment = await fetch(
-                            `https://api.razorpay.com/v1/payments/${data.razorpayPaymentId}`
+                        const result = await fetch(
+                            `/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
                         );
-                        const paymentData = await payment.json();
-                        console.log(payment);
-                        console.log(paymentData);
-                        buyBook(userId!, bookId!);
+                        const resdata = await result.json();
+                        console.log("Resdata:", resdata);
+
+                        // buyBook();
+                        alert("Successfully added to db");
+                        router.push(`/dashboard`);
                     } else {
-                        alert(res.message);
+                        // refund logic
                     }
                 },
-                theme: {
-                    color: "#3399cc",
-                },
             };
+
             const paymentObject = new window.Razorpay(options);
             paymentObject.on("payment.failed", function (response: any) {
                 alert(response.error.description);
@@ -133,7 +155,7 @@ export default function Checkout() {
     if (loading1)
         return (
             <div className="container h-screen flex justify-center items-center">
-                <LoaderCircle className=" animate-spin h-20 w-20 text-primary" />
+                <LoaderCircle className="animate-spin h-20 w-20 text-primary" />
             </div>
         );
     if (!userId) {
