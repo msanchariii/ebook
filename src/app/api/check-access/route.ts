@@ -12,7 +12,7 @@ export async function GET(request: Request) {
         // const { userId } = auth();
         const userId = searchParams.get("userId");
         const bookId = searchParams.get("bookId");
-        console.log("User Id:", userId, "Book Id:", bookId);
+        // console.log("User Id:", userId, "Book Id:", bookId);
 
         if (!userId || !bookId) {
             return response({

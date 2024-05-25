@@ -2,11 +2,16 @@ import ReadBook from "@/components/Book/ReadBook";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
-async function page({ params }: { params: { bookId: string } }) {
-    const bookId = params.bookId;
+// URL: /read?bookId=XYZ
+
+async function page({ searchParams }: { searchParams: { bookId: string } }) {
+    const bookId = searchParams.bookId;
     const { userId } = auth();
     if (!userId) {
-        return <>User ID is required.</>;
+        return <h1>User Must be Authenticated.</h1>;
+    }
+    if (!bookId) {
+        return <h1>Book Id is required.</h1>;
     }
     const encodedUserId = encodeURIComponent(userId);
     const encodedBookId = encodeURIComponent(bookId);
@@ -14,7 +19,6 @@ async function page({ params }: { params: { bookId: string } }) {
     try {
         const response = await fetch(url, { cache: "no-store" });
         const responseData = await response.json();
-        console.log(responseData);
 
         const file = responseData.success
             ? responseData.data.fileLocation

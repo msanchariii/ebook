@@ -23,7 +23,7 @@ async function page() {
                 {books &&
                     books.length > 0 &&
                     books.map((book: any) => {
-                        console.log(book);
+                        // console.log(book);
                         // console.log(book.coverImage);
 
                         return (

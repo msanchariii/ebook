@@ -6,7 +6,7 @@ export async function GET(request: Request) {
     try {
         await dbConnect();
         const books = await Book.find();
-        console.log(books);
+        // console.log(books);
 
         return response({
             status: 200,

@@ -21,12 +21,12 @@ async function page() {
     );
     const responseData = await response.json();
 
-    console.log(responseData.data.books);
+    // console.log(responseData.data.books);
     let myBookIds;
     if (responseData.success) {
         myBookIds = responseData.data.books;
     }
-    console.log("Type of MyBooks:", typeof myBookIds);
+    // console.log("Type of MyBooks:", typeof myBookIds);
 
     await dbConnect();
 
@@ -45,7 +45,7 @@ async function page() {
                     <h1 className="font-semibold">{book.title}</h1>
                     <p>{book.author}</p>
                     <Button>
-                        <Link href={`/dashboard/read/${book._id}`}>Read</Link>
+                        <Link href={`/read?bookId=${book._id}`}> Read </Link>
                     </Button>
                 </div>
             ))}
