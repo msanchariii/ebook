@@ -123,7 +123,22 @@ function Page() {
                         placeholder="20"
                         required
                     />
-
+                    <div className="bg-yellow-100 p-2 rounded-lg">
+                        <Label htmlFor="">
+                            File and Cover Image Link Format
+                        </Label>
+                        <p className="text-xs font-semibold text-red-700">
+                            https://cdn.jsdelivr.net/gh/
+                            <span className="font-bold underline">
+                                username
+                            </span>
+                            /<span className="font-bold underline">repo</span>
+                            @master/
+                            <span className="font-bold underline">
+                                filename
+                            </span>
+                        </p>
+                    </div>
                     <Label htmlFor="coverImage">Cover Image Link</Label>
                     <Input
                         type="text"
