@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AdminNavbar from "./_components/Navbar";
 
 export const metadata: Metadata = {
     title: "Brifessy Admin Panel",
@@ -10,5 +11,10 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    return <>{children}</>;
+    return (
+        <>
+            <AdminNavbar></AdminNavbar>
+            <main className="min-h-screen p-4">{children}</main>
+        </>
+    );
 }
