@@ -2,8 +2,31 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
+import { cookies } from "next/headers";
 
-function page() {
+async function page() {
+    let books, mags;
+    cookies();
+    const bookResponse = await fetch(
+        `${process.env.BASE_URL}/api/get-all-books`
+    );
+    const magResponse = await fetch(`${process.env.BASE_URL}/api/get-all-mags`);
+    const bookResponseData = await bookResponse.json();
+    const magResponseData = await magResponse.json();
+    if (bookResponseData.success && magResponseData.success) {
+        books = bookResponseData.data;
+        mags = magResponseData.data;
+    }
+
     return (
         <div>
             <div>
@@ -14,7 +37,37 @@ function page() {
                     </Button>
                 </div>
                 <Separator />
-                <div>{/* Table ormat Book */}</div>
+                <div className="my-8">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="bg-yellow-100 text-black">
+                                    Book ID
+                                </TableHead>
+                                <TableHead>Title</TableHead>
+                                <TableHead>Price</TableHead>
+                                <TableHead className="text-right">
+                                    Author
+                                </TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {books?.map((book: any) => (
+                                <TableRow key={book._id}>
+                                    <TableCell className="font-semibold bg-yellow-50">
+                                        {book._id}
+                                    </TableCell>
+                                    <TableCell>{book.title}</TableCell>
+                                    <TableCell>{book.price}</TableCell>
+                                    <TableCell className="text-right">
+                                        {book.author}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+                <Separator />
             </div>
             <div>
                 <div className="flex justify-between my-4">
@@ -26,7 +79,31 @@ function page() {
                     </Button>
                 </div>
                 <Separator />
-                <div>{/* Table ormat Book */}</div>
+                <div className="my-8">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="bg-yellow-100 text-black">
+                                    Magazine ID
+                                </TableHead>
+                                <TableHead>Title</TableHead>
+                                <TableHead>Price</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {mags?.map((book: any) => (
+                                <TableRow key={book._id}>
+                                    <TableCell className="font-semibold bg-yellow-50">
+                                        {book._id}
+                                    </TableCell>
+                                    <TableCell>{book.title}</TableCell>
+                                    <TableCell>{book.price}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+                <Separator />
             </div>
         </div>
     );
