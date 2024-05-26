@@ -1,38 +1,39 @@
 "use client";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
 import { useRouter, useSearchParams } from "next/navigation";
 import Script from "next/script";
 import { LoaderCircle } from "lucide-react";
 import PleaseLogIn from "@/components/PleaseLogIn";
 import { useAuth } from "@clerk/nextjs";
+import { ProductOverview } from "@/components/RenameOverview";
+
+interface BookDetails {
+    title: string;
+    author: string;
+    description: string;
+    price: number;
+    coverImage: string;
+}
 
 export default function Checkout() {
     const searchParams = useSearchParams();
     const { userId } = useAuth();
     const router = useRouter();
-    const [amount, setAmount] = React.useState(null); // state for amount
-    // state for successful payment
-
-    const bookId = searchParams.get("id");
-    const type = searchParams.get("type");
-
+    const [amount, setAmount] = React.useState<number | null>(null);
+    const [bookDetails, setBookDetails] = React.useState<BookDetails | null>(
+        null
+    );
     const [loading1, setLoading1] = React.useState(true);
     const [loading, setLoading] = React.useState(false);
 
-    const idRef = React.useRef();
+    const bookId = searchParams.get("id");
+    const type = searchParams.get("type");
+    const idRef = React.useRef<string | null>(null);
 
     const key_id = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!;
 
-    // fetch book data
+    // Fetch book data
     React.useEffect(() => {
         const fetchPrice = async () => {
             try {
@@ -42,7 +43,8 @@ export default function Checkout() {
                 const responseData = await response.json();
                 const price = responseData?.data?.price;
                 if (price) {
-                    setAmount(price.toString());
+                    setAmount(price);
+                    setBookDetails(responseData?.data?.details);
                 }
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
@@ -54,7 +56,7 @@ export default function Checkout() {
         fetchPrice();
     }, [bookId, type]);
 
-    // create order id
+    // Create order id
     React.useEffect(() => {
         if (amount) {
             const createOrderId = async () => {
@@ -65,7 +67,7 @@ export default function Checkout() {
                             "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                            amount: parseFloat(amount) * 100,
+                            amount: amount * 100,
                         }),
                     });
 
@@ -74,8 +76,7 @@ export default function Checkout() {
                     }
 
                     const data = await response.json();
-                    const id = data.orderId;
-                    idRef.current = id;
+                    idRef.current = data.orderId;
                     setLoading1(false);
                 } catch (error) {
                     console.error(
@@ -95,14 +96,14 @@ export default function Checkout() {
 
         async function buyBook() {
             await fetch(
-                `${process.env.BASE_URL}/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
+                `/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
             );
         }
 
         try {
             const options = {
                 key: key_id,
-                amount: parseFloat(amount!) * 100,
+                amount: amount! * 100,
                 currency: "INR",
                 name: "Payment",
                 description: "Payment",
@@ -126,13 +127,9 @@ export default function Checkout() {
 
                     const res = await result.json();
                     if (res.isOk) {
-                        const result = await fetch(
+                        await fetch(
                             `/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
                         );
-                        const resdata = await result.json();
-                        console.log("Resdata:", resdata);
-
-                        // buyBook();
                         alert("Successfully added to db");
                         router.push(`/dashboard`);
                     } else {
@@ -167,34 +164,21 @@ export default function Checkout() {
                 id="razorpay-checkout-js"
                 src="https://checkout.razorpay.com/v1/checkout.js"
             />
-            <section className="container h-screen flex flex-col justify-center items-center gap-10">
-                <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight">
-                    Checkout
-                </h1>
-                <Card className="max-w-[25rem] space-y-8">
-                    <CardHeader>
-                        <CardTitle className="my-4">Continue</CardTitle>
-                        <CardDescription>
-                            By clicking on pay you will purchase the book.
-                            <p>
-                                Amount to Pay: <strong>Rs. {amount} /-</strong>
-                            </p>
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <form onSubmit={processPayment}>
-                            <Button className="w-full" type="submit">
-                                {loading ? "...loading" : "Pay"}
-                            </Button>
-                        </form>
-                    </CardContent>
-                    <CardFooter className="flex">
-                        <p className="text-sm text-muted-foreground underline underline-offset-4">
-                            Please read the terms and conditions.
-                        </p>
-                    </CardFooter>
-                </Card>
-            </section>
+            {bookDetails && (
+                <ProductOverview
+                    title={bookDetails.title}
+                    author={bookDetails.author}
+                    description={bookDetails.description}
+                    price={bookDetails.price}
+                    image={bookDetails.coverImage}
+                >
+                    <form onSubmit={processPayment}>
+                        <Button className="w-full" type="submit">
+                            {loading ? "...loading" : "Pay"}
+                        </Button>
+                    </form>
+                </ProductOverview>
+            )}
         </>
     );
 }

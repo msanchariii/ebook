@@ -42,7 +42,7 @@ export async function GET(request: Request) {
             message: "Successfully Fetched Price",
             data: {
                 price: item.price,
-                title: item.title,
+                details: item,
             },
         });
     } catch (error: any) {

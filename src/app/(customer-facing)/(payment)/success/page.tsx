@@ -14,7 +14,7 @@ export default function PaymentVerifyPage() {
                 variant={"outline"}
                 className="border-green-400 hover:bg-green-50 border-2 w-40"
             >
-                <Link href={"/"}>Go to Home</Link>
+                <Link href={"/dashboard"}>Go to Dashboard</Link>
             </Button>
         </section>
     );
