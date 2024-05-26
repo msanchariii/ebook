@@ -37,13 +37,13 @@ async function page() {
                     </Button>
                 </div>
                 <Separator />
-                <div className="my-8">
+                <div className="my-8 lg:w-2/3">
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="bg-yellow-100 text-black">
+                                {/* <TableHead className="bg-yellow-100 text-black">
                                     Book ID
-                                </TableHead>
+                                </TableHead> */}
                                 <TableHead>Title</TableHead>
                                 <TableHead>Price</TableHead>
                                 <TableHead className="text-right">
@@ -54,9 +54,9 @@ async function page() {
                         <TableBody>
                             {books?.map((book: any) => (
                                 <TableRow key={book._id}>
-                                    <TableCell className="font-semibold bg-yellow-50">
+                                    {/* <TableCell className="font-semibold bg-yellow-50">
                                         {book._id}
-                                    </TableCell>
+                                    </TableCell> */}
                                     <TableCell>{book.title}</TableCell>
                                     <TableCell>{book.price}</TableCell>
                                     <TableCell className="text-right">
@@ -79,13 +79,13 @@ async function page() {
                     </Button>
                 </div>
                 <Separator />
-                <div className="my-8">
+                <div className="my-8 lg:w-2/3">
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="bg-yellow-100 text-black">
+                                {/* <TableHead className="bg-yellow-100 text-black">
                                     Magazine ID
-                                </TableHead>
+                                </TableHead> */}
                                 <TableHead>Title</TableHead>
                                 <TableHead>Price</TableHead>
                             </TableRow>
@@ -93,9 +93,9 @@ async function page() {
                         <TableBody>
                             {mags?.map((book: any) => (
                                 <TableRow key={book._id}>
-                                    <TableCell className="font-semibold bg-yellow-50">
+                                    {/* <TableCell className="font-semibold bg-yellow-50">
                                         {book._id}
-                                    </TableCell>
+                                    </TableCell> */}
                                     <TableCell>{book.title}</TableCell>
                                     <TableCell>{book.price}</TableCell>
                                 </TableRow>

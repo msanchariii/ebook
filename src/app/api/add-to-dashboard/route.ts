@@ -8,6 +8,7 @@ export async function GET(request: Request) {
         const { searchParams } = new URL(request.url); // getting queries
         const userID = searchParams.get("userId");
         const bookId = searchParams.get("bookId");
+        const type = searchParams.get("type");
 
         if (!userID || !bookId) {
             return response({
@@ -23,6 +24,7 @@ export async function GET(request: Request) {
         let user = await User.findOne({ clerkId });
 
         if (!user) {
+            // or we can create new user
             return response({
                 success: false,
                 status: 404, // 201 Created
@@ -30,6 +32,7 @@ export async function GET(request: Request) {
             });
         }
         // User exists. We will fetch all the books.
+
         user.books.push(bookId);
         await user.save();
         return response({

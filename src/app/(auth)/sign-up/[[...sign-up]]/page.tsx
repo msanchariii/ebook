@@ -4,7 +4,7 @@ export default function Page() {
     return (
         <div className="w-full grid place-items-center content-center min-h-screen my-8">
             <div className="">
-                <SignUp path="/sign-up" />
+                <SignUp path="/sign-up" forceRedirectUrl={`/dashboard`} />
             </div>
         </div>
     );
