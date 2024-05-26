@@ -130,8 +130,8 @@ export default function Checkout() {
                         await fetch(
                             `/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
                         );
-                        alert("Successfully added to db");
-                        router.push(`/dashboard`);
+                        alert("Successfully added to dashboard.");
+                        router.push(`/success`);
                     } else {
                         // refund logic
                     }
