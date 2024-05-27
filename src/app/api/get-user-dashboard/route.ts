@@ -2,7 +2,7 @@ import { response } from "@/helpers/ApiRespone";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User.model";
 
-// URL : /api/get-user-dashboard?userId=
+// URL : /api/get-user-dashboard?userId=${userId}&userEmail=${userEmail}
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url); // getting queries
@@ -22,6 +22,14 @@ export async function GET(request: Request) {
         let user = await User.findOne({ clerkId });
 
         if (!user) {
+            // email is required
+            if (!userEmail) {
+                return response({
+                    success: false,
+                    status: 400,
+                    message: "Email ID is required",
+                });
+            }
             // user doesn't exist in DB. We need to create one.
             user = new User({
                 clerkId,
@@ -43,7 +51,7 @@ export async function GET(request: Request) {
                 success: true,
                 status: 200,
                 message: "User found in DB. Books returned",
-                data: { books: user.books },
+                data: { books: user.books, mags: user.mags },
             });
         }
     } catch (error: any) {

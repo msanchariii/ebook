@@ -16,6 +16,8 @@ interface BookDetails {
     coverImage: string;
 }
 
+// /checkout/id={ }&type={ }
+
 export default function Checkout() {
     const searchParams = useSearchParams();
     const { userId } = useAuth();
@@ -27,7 +29,7 @@ export default function Checkout() {
     const [loading1, setLoading1] = React.useState(true);
     const [loading, setLoading] = React.useState(false);
 
-    const bookId = searchParams.get("id");
+    const itemId = searchParams.get("id");
     const type = searchParams.get("type");
     const idRef = React.useRef<string | null>(null);
 
@@ -38,7 +40,7 @@ export default function Checkout() {
         const fetchPrice = async () => {
             try {
                 const response = await fetch(
-                    `/api/get-price?type=${type}&id=${bookId}`
+                    `/api/get-price?type=${type}&id=${itemId}`
                 );
                 const responseData = await response.json();
                 const price = responseData?.data?.price;
@@ -54,7 +56,7 @@ export default function Checkout() {
             }
         };
         fetchPrice();
-    }, [bookId, type]);
+    }, [itemId, type]);
 
     // Create order id
     React.useEffect(() => {
@@ -96,7 +98,7 @@ export default function Checkout() {
 
         async function buyBook() {
             await fetch(
-                `/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
+                `/api/add-to-dashboard?userId=${userId}&type=${type}&id=${itemId}`
             );
         }
 
@@ -128,7 +130,7 @@ export default function Checkout() {
                     const res = await result.json();
                     if (res.isOk) {
                         await fetch(
-                            `/api/add-to-dashboard?userId=${userId}&bookId=${bookId}`
+                            `/api/add-to-dashboard?userId=${userId}&type=${type}&id=${itemId}`
                         );
                         alert("Successfully added to dashboard.");
                         router.push(`/success`);

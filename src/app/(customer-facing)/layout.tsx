@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { FooterThree } from "@/components/Footer2";
 
 export const metadata: Metadata = {
     title: "Brifessy",
@@ -16,7 +17,8 @@ export default function CustomerFacingLayout({
         <>
             <Navbar />
             <main className="min-h-screen p-4">{children}</main>
-            <Footer />
+            {/* <Footer /> */}
+            <FooterThree />
         </>
     );
 }

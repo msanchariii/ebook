@@ -1,7 +1,7 @@
-import Dashboard from "@/components/Dashboard";
 import { Button } from "@/components/ui/button";
 import dbConnect from "@/lib/dbConnect";
 import Book from "@/models/Book.model";
+import Magazine from "@/models/Magazine.model";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { cookies } from "next/headers";
 import Link from "next/link";
@@ -33,8 +33,10 @@ async function page() {
 
     // console.log(responseData.data.books);
     let myBookIds;
+    let myMagIds;
     if (responseData.success) {
         myBookIds = responseData.data.books;
+        myMagIds = responseData.data.mags;
     }
     // console.log("Type of MyBooks:", typeof myBookIds);
 
@@ -44,22 +46,44 @@ async function page() {
     if (myBookIds.length > 0) {
         myBooks = await Book.find({ _id: { $in: myBookIds } });
     }
+    let myMags;
+    if (myMagIds.length > 0) {
+        myMags = await Magazine.find({ _id: { $in: myMagIds } });
+    }
 
     return (
-        <Dashboard userId={userId}>
-            {myBooks?.map((book) => (
-                <div
-                    key={book._id}
-                    className="my-4 flex flex-col gap-y-2 bg-yellow-200 w-1/3 p-4 rounded-lg mx-1"
-                >
-                    <h1 className="font-semibold">{book.title}</h1>
-                    <p>{book.author}</p>
-                    <Button>
-                        <Link href={`/read?bookId=${book._id}`}> Read </Link>
-                    </Button>
-                </div>
-            ))}
-        </Dashboard>
+        <div>
+            {/* Books */}
+            <div>
+                {myBooks?.map((book) => (
+                    <div
+                        key={book._id}
+                        className="my-4 flex flex-col gap-y-2 bg-yellow-200 w-1/3 p-4 rounded-lg mx-1"
+                    >
+                        <h1 className="font-semibold">{book.title}</h1>
+                        <p>{book.author}</p>
+                        <Button>
+                            <Link href={`/read?bookId=${book._id}`}>Read</Link>
+                        </Button>
+                    </div>
+                ))}
+            </div>
+            {/* Magazines */}
+            <div>
+                {myMags?.map((mag) => (
+                    <div
+                        key={mag._id}
+                        className="my-4 flex flex-col gap-y-2 bg-yellow-200 w-1/3 p-4 rounded-lg mx-1"
+                    >
+                        <h1 className="font-semibold">{mag.title}</h1>
+                        <p>{mag.author}</p>
+                        <Button>
+                            <Link href={`/read?bookId=${mag._id}`}> Read </Link>
+                        </Button>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 }
 

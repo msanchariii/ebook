@@ -4,7 +4,7 @@ import Book from "@/models/Book.model";
 import Magazine from "@/models/Magazine.model";
 import User from "@/models/User.model";
 
-// URL : /api/add-user-dashboard?userId=XYZ&bookId=PQR
+// URL : /api/get-price?userId=${userId}&id=${id}
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url); // getting queries

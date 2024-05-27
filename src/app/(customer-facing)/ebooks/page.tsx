@@ -7,9 +7,12 @@ import React from "react";
 
 async function page() {
     cookies();
-    const response = await fetch(`${process.env.BASE_URL}/api/get-all-books`, {
-        cache: "no-store",
-    });
+    const response = await fetch(
+        `${process.env.BASE_URL}/api/fetch-all?type=book`,
+        {
+            cache: "no-store",
+        }
+    );
     const responseData = await response.json();
     const { userId } = auth();
 

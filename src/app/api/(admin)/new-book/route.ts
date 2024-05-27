@@ -54,3 +54,7 @@ export async function POST(req: Request) {
         });
     }
 }
+
+// api/book?id=
+
+export async function GET(req: Request) {}

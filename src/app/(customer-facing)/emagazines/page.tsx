@@ -5,9 +5,12 @@ import React from "react";
 
 async function page() {
     cookies();
-    const response = await fetch(`${process.env.BASE_URL}/api/get-all-mags`, {
-        cache: "no-store",
-    });
+    const response = await fetch(
+        `${process.env.BASE_URL}/api/fetch-all?type=mag`,
+        {
+            cache: "no-store",
+        }
+    );
     const responseData = await response.json();
     const { userId } = auth();
 

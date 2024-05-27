@@ -17,9 +17,11 @@ async function page() {
     let books, mags;
     cookies();
     const bookResponse = await fetch(
-        `${process.env.BASE_URL}/api/get-all-books`
+        `${process.env.BASE_URL}/api/fetch-all?type=books`
     );
-    const magResponse = await fetch(`${process.env.BASE_URL}/api/get-all-mags`);
+    const magResponse = await fetch(
+        `${process.env.BASE_URL}/api/fetch-all?type=mag`
+    );
     const bookResponseData = await bookResponse.json();
     const magResponseData = await magResponse.json();
     if (bookResponseData.success && magResponseData.success) {

@@ -4,8 +4,15 @@ import React from "react";
 
 // URL: /read?bookId=XYZ
 
-async function page({ searchParams }: { searchParams: { bookId: string } }) {
+async function page({
+    searchParams,
+}: {
+    searchParams: { bookId: string; type: string; itemId: string };
+}) {
     const bookId = searchParams.bookId;
+    const type = searchParams.bookId;
+    const itemId = searchParams.itemId;
+
     const { userId } = auth();
     if (!userId) {
         return <h1>User Must be Authenticated.</h1>;
@@ -14,10 +21,11 @@ async function page({ searchParams }: { searchParams: { bookId: string } }) {
         return <h1>Book Id is required.</h1>;
     }
     const encodedUserId = encodeURIComponent(userId);
-    const encodedBookId = encodeURIComponent(bookId);
-    const url = `${process.env.BASE_URL}/api/check-access?userId=${encodedUserId}&bookId=${encodedBookId}`;
+    const encodedItemId = encodeURIComponent(itemId);
+
+    const url = `${process.env.BASE_URL}/api/check-access?type=${type}&userId=${encodedUserId}&id=${encodedItemId}`;
     try {
-        const response = await fetch(url, { cache: "no-store" });
+        const response = await fetch(url);
         const responseData = await response.json();
 
         const file = responseData.success

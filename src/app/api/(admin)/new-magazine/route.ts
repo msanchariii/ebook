@@ -52,3 +52,7 @@ export async function POST(req: Request) {
         });
     }
 }
+
+// api/mag?id=
+
+export async function GET(req: Request) {}

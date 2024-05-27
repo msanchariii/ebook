@@ -2,19 +2,19 @@ import { response } from "@/helpers/ApiRespone";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User.model";
 
-// URL : /api/add-user-dashboard?userId=XYZ&bookId=PQR
+// URL : /api/add-to-dashboard?userId={ }&type={ }&id={}
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url); // getting queries
         const userID = searchParams.get("userId");
-        const bookId = searchParams.get("bookId");
+        const itemId = searchParams.get("id");
         const type = searchParams.get("type");
 
-        if (!userID || !bookId) {
+        if (!userID || !itemId || !type) {
             return response({
                 success: false,
                 status: 400,
-                message: "User ID & Book ID is required",
+                message: "User ID, Product Type & Product ID is required",
             });
         }
         const clerkId = decodeURIComponent(userID);
@@ -32,9 +32,20 @@ export async function GET(request: Request) {
             });
         }
         // User exists. We will fetch all the books.
+        if (type === "book") {
+            user.books.push(itemId);
+        } else if (type === "mag") {
+            user.mags.push(itemId);
+        } else {
+            return response({
+                success: false,
+                status: 500,
+                message: "Invalid Product Type",
+            });
+        }
 
-        user.books.push(bookId);
         await user.save();
+
         return response({
             success: true,
             status: 200,

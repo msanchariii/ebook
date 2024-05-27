@@ -1,26 +1,35 @@
 import { response } from "@/helpers/ApiRespone";
 import dbConnect from "@/lib/dbConnect";
 import Book from "@/models/Book.model";
+import Magazine from "@/models/Magazine.model";
 import User from "@/models/User.model";
-import { auth } from "@clerk/nextjs/server";
 
-// URL : /api/check-access?userId=XYZ&bookId=PQR
+// URL : /api/check-access?type=${type}&id=${id}&userId={userId}
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
         // getting queries
-        // const { userId } = auth();
         const userId = searchParams.get("userId");
-        const bookId = searchParams.get("bookId");
-        // console.log("User Id:", userId, "Book Id:", bookId);
+        const type = searchParams.get("type");
+        const itemId = searchParams.get("id");
 
-        if (!userId || !bookId) {
+        // url validation
+        if (!userId || !itemId || !type) {
             return response({
                 success: false,
                 status: 400,
-                message: "User ID & Book ID is required",
+                message: "User ID, Product ID and Product type is required",
             });
         }
+        // correct type or not
+        if (type !== "book" && type !== "mag") {
+            return response({
+                success: false,
+                status: 400,
+                message: "Invalid product type.",
+            });
+        }
+
         const clerkId = decodeURIComponent(userId);
 
         await dbConnect();
@@ -34,30 +43,45 @@ export async function GET(request: Request) {
                 message: "User not found in Database.",
             });
         }
-
-        // Check if the book is already added to the user's dashboard
-        if (user.books.includes(bookId)) {
-            // Book is already added, fetch the book details and return the fileLocation
-            const book = await Book.findById(bookId);
-            if (!book) {
-                return response({
-                    success: false,
-                    status: 404,
-                    message: "Book not found in Database.",
-                });
-            }
-
+        let item;
+        if (type === "book") {
+            item = await Book.findById(itemId);
+        } else if (type === "mag") {
+            item = await Magazine.findById(itemId);
+        }
+        // check if the product exists in database
+        if (!item) {
             return response({
-                success: true,
-                status: 200,
-                message: "User has access to the book",
-                data: {
-                    fileLocation: book.fileLocation,
-                },
+                success: false,
+                status: 404,
+                message: "Product not found.",
             });
         }
 
-        // Book is not added, return error
+        if (type === "book") {
+            if (user.books.includes(itemId)) {
+                return response({
+                    success: true,
+                    status: 200,
+                    message: "User has access to book.",
+                    data: {
+                        fileLocation: item.fileLocation,
+                    },
+                });
+            }
+        } else if (type === "mag") {
+            if (user.mags.includes(itemId)) {
+                return response({
+                    success: true,
+                    status: 200,
+                    message: "User has access to Magazine.",
+                    data: {
+                        fileLocation: item.fileLocation,
+                    },
+                });
+            }
+        }
+        // item is not added, return error
         return response({
             success: false,
             status: 403, // Forbidden
