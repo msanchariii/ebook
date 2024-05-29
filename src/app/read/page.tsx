@@ -2,23 +2,25 @@ import ReadBook from "@/components/Book/ReadBook";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
-// URL: /read?bookId=XYZ
+// URL: /read?type={}&itemId={}
 
 async function page({
     searchParams,
 }: {
-    searchParams: { bookId: string; type: string; itemId: string };
+    searchParams: { type: string; itemId: string };
 }) {
-    const bookId = searchParams.bookId;
-    const type = searchParams.bookId;
+    const type = searchParams.type;
     const itemId = searchParams.itemId;
 
     const { userId } = auth();
     if (!userId) {
         return <h1>User Must be Authenticated.</h1>;
     }
-    if (!bookId) {
+    if (!itemId) {
         return <h1>Book Id is required.</h1>;
+    }
+    if (!type) {
+        return <h1>Product Type is required.</h1>;
     }
     const encodedUserId = encodeURIComponent(userId);
     const encodedItemId = encodeURIComponent(itemId);

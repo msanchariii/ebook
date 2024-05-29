@@ -63,7 +63,11 @@ async function page() {
                         <h1 className="font-semibold">{book.title}</h1>
                         <p>{book.author}</p>
                         <Button>
-                            <Link href={`/read?bookId=${book._id}`}>Read</Link>
+                            <Link
+                                href={`/read?type=book&itemId=${book._id}&userId=${userId}`}
+                            >
+                                Read
+                            </Link>
                         </Button>
                     </div>
                 ))}
@@ -78,7 +82,12 @@ async function page() {
                         <h1 className="font-semibold">{mag.title}</h1>
                         <p>{mag.author}</p>
                         <Button>
-                            <Link href={`/read?bookId=${mag._id}`}> Read </Link>
+                            <Link
+                                href={`/read?type=mag&itemId=${mag._id}&userId=${userId}`}
+                            >
+                                {" "}
+                                Read{" "}
+                            </Link>
                         </Button>
                     </div>
                 ))}
