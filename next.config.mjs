@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+            config.resolve.alias["pdfjs-dist/build/pdf.worker.entry"] =
+                "pdfjs-dist/build/pdf.worker.entry.js";
+        }
+
+        return config;
+    },
     images: {
         remotePatterns: [
             {
