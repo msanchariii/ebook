@@ -76,18 +76,18 @@ const PdfViewer = ({ pdfUrl }) => {
                     className="w-full rounded border shadow-lg"
                 ></canvas>
             </div>
-            <div className="mb-4 flex w-full max-w-screen-lg justify-between">
+            <div className="my-4 flex w-full max-w-screen-lg justify-between">
                 <button
                     onClick={handlePrevious}
                     disabled={pageNumber <= 1}
-                    className="rounded bg-blue-500 px-4 py-2 text-white disabled:opacity-50"
+                    className="rounded bg-emerald-500 px-4 py-2 text-white disabled:opacity-50"
                 >
                     Previous
                 </button>
                 <button
                     onClick={handleNext}
                     disabled={pageNumber >= numPages}
-                    className="rounded bg-blue-500 px-4 py-2 text-white disabled:opacity-50"
+                    className="rounded bg-emerald-500 px-4 py-2 text-white disabled:opacity-50"
                 >
                     Next
                 </button>
