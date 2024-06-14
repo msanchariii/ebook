@@ -1,15 +1,15 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { getDocument } from "pdfjs-dist";
+import { getDocument, PDFDocumentProxy } from "pdfjs-dist";
 import "pdfjs-dist/build/pdf.worker.entry";
 
-const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
-    const canvasRef = useRef(null);
-    const [pdf, setPdf] = useState(null);
-    const [pageNumber, setPageNumber] = useState(1);
-    const [numPages, setNumPages] = useState(null);
-    const renderTaskRef = useRef(null);
-    const [sliderValue, setSliderValue] = useState(1);
+const PdfViewer: React.FC<{ pdfUrl: string }> = ({ pdfUrl }) => {
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const [pdf, setPdf] = useState<PDFDocumentProxy | null>(null);
+    const [pageNumber, setPageNumber] = useState<number>(1);
+    const [numPages, setNumPages] = useState<number | null>(null);
+    const renderTaskRef = useRef<any>(null); // Change the type if possible
+    const [sliderValue, setSliderValue] = useState<number>(1);
 
     useEffect(() => {
         const loadPdf = async () => {
@@ -22,7 +22,7 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
         };
 
         loadPdf();
-    }, [pdfUrl]);
+    }, [pdfUrl, pageNumber]);
 
     useEffect(() => {
         if (pdf) {
@@ -30,7 +30,7 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
         }
     }, [pdf, pageNumber]);
 
-    const renderPage = async (pdf, pageNumber) => {
+    const renderPage = async (pdf: PDFDocumentProxy, pageNumber: number) => {
         if (renderTaskRef.current) {
             renderTaskRef.current.cancel();
         }
@@ -39,7 +39,11 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
         const viewport = page.getViewport({ scale: 1 });
 
         const canvas = canvasRef.current;
+        if (!canvas) return;
+
         const context = canvas.getContext("2d");
+        if (!context) return;
+
         const canvasWidth = window.innerWidth; // Full screen width
 
         const scale = canvasWidth / viewport.width; // Scale to fit width
@@ -56,7 +60,7 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
         renderTaskRef.current = page.render(renderContext);
         try {
             await renderTaskRef.current.promise;
-        } catch (err) {
+        } catch (err: any) {
             if (err.name !== "RenderingCancelledException") {
                 console.error(err);
             }
@@ -65,19 +69,19 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
 
     const handlePrevious = () => {
         if (pageNumber > 1) {
-            setPageNumber(pageNumber - 1);
-            setSliderValue(pageNumber - 1);
+            setPageNumber((prevPageNumber) => prevPageNumber - 1);
+            setSliderValue((prevPageNumber) => prevPageNumber - 1);
         }
     };
 
     const handleNext = () => {
-        if (pageNumber < numPages) {
-            setPageNumber(pageNumber + 1);
-            setSliderValue(pageNumber + 1);
+        if (pageNumber < (numPages ?? 1)) {
+            setPageNumber((prevPageNumber) => prevPageNumber + 1);
+            setSliderValue((prevPageNumber) => prevPageNumber + 1);
         }
     };
 
-    const handleSliderChange = (event) => {
+    const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSliderValue(parseInt(event.target.value, 10));
     };
 
@@ -86,7 +90,7 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
     };
 
     useEffect(() => {
-        const disableRightClick = (e) => {
+        const disableRightClick = (e: MouseEvent) => {
             e.preventDefault();
         };
         document.addEventListener("contextmenu", disableRightClick);
@@ -113,7 +117,7 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
                 </button>
                 <button
                     onClick={handleNext}
-                    disabled={pageNumber >= numPages}
+                    disabled={pageNumber >= (numPages ?? 1)}
                     className="rounded bg-emerald-500 px-4 py-2 text-white disabled:opacity-50"
                 >
                     Next
@@ -123,7 +127,7 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
                 <input
                     type="range"
                     min="1"
-                    max={numPages}
+                    max={numPages ?? 1}
                     value={sliderValue}
                     onChange={handleSliderChange}
                     onMouseUp={handleSliderMouseUp}
@@ -135,7 +139,7 @@ const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
                 Jump to page {sliderValue}
             </p>
             <p className="mt-2 w-full max-w-screen-lg text-center">
-                Page {pageNumber} of {numPages}
+                Page {pageNumber} of {numPages ?? "-"}
             </p>
         </div>
     );
