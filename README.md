@@ -15,22 +15,23 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+<!--
 ## Routes:
 
-`/` : Home (Hero, Buy Book and Magazines option)  
-`/emagazines` : All the magazines (descending order of created at)  
-`/ebooks` : All books  
-`/dashboard` : All books accessible by user  
+`/` : Home (Hero, Buy Book and Magazines option)
+`/emagazines` : All the magazines (descending order of created at)
+`/ebooks` : All books
+`/dashboard` : All books accessible by user
 `/dashboard/read` : Reading Page.
 
 ## API Routes:
 
-`/api/get-all-books` : Fetching All Books  
-`/api/get-all-mags` : Fetching All Magazines  
-`/api/book?bookId=XYZ` : Fetching a Single Book  
-`/api/mag?magId=XYZ`: Fetching a Single Magazine  
-`/api/add-to-dashboard?userId=XYZ&bookId=PQR` : Adding a book/magazine to dashboard after purchasing.  
-`/api/get-user-dashboard?userId=XYZ` : Fetching user dashboard (accessible books).  
+`/api/get-all-books` : Fetching All Books
+`/api/get-all-mags` : Fetching All Magazines
+`/api/book?bookId=XYZ` : Fetching a Single Book
+`/api/mag?magId=XYZ`: Fetching a Single Magazine
+`/api/add-to-dashboard?userId=XYZ&bookId=PQR` : Adding a book/magazine to dashboard after purchasing.
+`/api/get-user-dashboard?userId=XYZ` : Fetching user dashboard (accessible books).
 `/api/check-access` : Checking if user has access to a book/magazine.
 
 ## DB Models:
@@ -43,4 +44,4 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 {title, description, price, fileLocation, coverImage. issn, createdAt}
 
-### Razorpay
+### Razorpay -->
