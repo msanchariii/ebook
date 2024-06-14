@@ -85,6 +85,16 @@ const PdfViewer = ({ pdfUrl }) => {
         setPageNumber(sliderValue);
     };
 
+    useEffect(() => {
+        const disableRightClick = (e) => {
+            e.preventDefault();
+        };
+        document.addEventListener("contextmenu", disableRightClick);
+        return () => {
+            document.removeEventListener("contextmenu", disableRightClick);
+        };
+    }, []);
+
     return (
         <div className="flex w-full flex-col items-center">
             <div className="w-full max-w-screen-lg">
