@@ -38,7 +38,7 @@ async function page({
         // return <div>{file && <ReadBook file={file} />}</div>;
         const pdfUrl = "/sample.pdf";
         return (
-            <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gray-100 p-4">
+            <div className="flex w-full flex-col items-center justify-center p-4">
                 <PdfViewer pdfUrl={file} />
             </div>
         );
