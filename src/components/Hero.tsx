@@ -1,50 +1,55 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 import React from "react";
+import Link from "next/link";
 
 const imageLinks = {
     hero: "https://images.unsplash.com/photo-1610116306796-6fea9f4fae38?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 };
 
-function Hero() {
+export function Hero() {
     return (
-        <>
-            {/* <div className="w-full aspect-video overflow-hidden relative rounded-3xl">
-                <Image
-                    src={imageLinks.hero}
-                    fill
-                    alt="hero-image"
-                    className="object-contain rounded-3xl"
-                />
-            </div> */}
-            <div className="min-h-screen w-full rounded-lg">
-                <section className="rounded-lg bg-offwhite bg-gradient-to-br py-16 md:py-32">
-                    <div className="container relative mx-auto px-4 text-center md:px-8">
-                        <div className="relative top-1/2 z-10">
-                            <h1 className="mb-6 text-4xl font-bold leading-tight text-leaf-200 md:text-6xl">
-                                Brifessy
-                            </h1>
-                            <p className="mb-12 text-lg text-leaf-100 md:text-2xl">
-                                Your Next Book is Just a Click Away
+        <div className="relative w-full bg-white">
+            <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
+                <div className="flex flex-col justify-center px-4 py-12 md:py-16 lg:col-span-7 lg:gap-x-6 lg:px-6 lg:py-24 xl:col-span-6">
+                    <h1 className="mt-8 text-3xl font-bold tracking-tight text-black md:text-4xl lg:text-6xl">
+                        People who care about your books
+                    </h1>
+                    <p className="mt-8 text-lg text-gray-700">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Consequatur modi blanditiis dolores quasi eaque
+                        explicabo!
+                    </p>
+                    <form action="" className="mt-8 flex items-start space-x-2">
+                        <div>
+                            <input
+                                className="flex w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                type="email"
+                                placeholder="Enter your email"
+                                id="email"
+                            ></input>
+                            <p className="mt-2 text-sm text-gray-500">
+                                We care about your privacy
                             </p>
-                            <Link
-                                href="/ebooks"
-                                className="mx-2 rounded-full bg-white px-8 py-2 font-bold text-teal-800 transition duration-200 hover:bg-teal-800 hover:text-white"
-                            >
-                                Shop Books
-                            </Link>
-                            <Link
-                                href="/emagazines"
-                                className="mx-2 rounded-full bg-white px-8 py-2 font-bold text-teal-800 transition duration-200 hover:bg-teal-800 hover:text-white"
-                            >
-                                Shop Magazines
-                            </Link>
                         </div>
-                    </div>
-                </section>
+                        <div>
+                            <button
+                                type="button"
+                                className="rounded-md bg-black px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                            >
+                                Subscribe to Newsletter
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div className="relative lg:col-span-5 lg:-mr-8 xl:col-span-6">
+                    <img
+                        className="aspect-[3/2] rounded-lg bg-gray-50 object-cover lg:aspect-[4/3] lg:h-[700px] xl:aspect-[16/9]"
+                        src={imageLinks.hero}
+                        alt=""
+                    />
+                </div>
             </div>
-            <div></div>
-        </>
+        </div>
     );
 }
 
