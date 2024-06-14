@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../ui/button";
@@ -11,6 +12,7 @@ import {
     DrawerTrigger,
 } from "@/components/ui/drawer";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface BookCardProps {
     bookId: string;
@@ -53,21 +55,32 @@ export default function BookCard({
         const month = date.toLocaleString("default", { month: "long" });
         return `${month} ${year}`;
     };
+    const router = useRouter();
+    const handleClick = (id: string) => {
+        router.push(`/product?type=mag&id=${id}`);
+    };
 
     return (
-        <div className="bg-slate-100 shadow rounded-lg w-72 p-4 m-4">
-            <div className="mx-6">
-                <Image src={coverImage} height={250} width={180} alt={title} />
+        <div
+            className="m-4 w-full cursor-pointer p-2 hover:bg-slate-100"
+            onClick={() => handleClick(bookId)}
+        >
+            <div className="relative mx-auto aspect-[2/3] w-full overflow-hidden lg:w-5/6">
+                <Image src={coverImage} fill alt={title} />
             </div>
-            <div className="flex flex-col gap-y-1 my-2 mx-6">
-                <h2 className="text-md font-bold">{title}</h2>
+            <div className="mx-6 my-2 flex flex-col gap-y-1">
+                <p>{createdAt && formatDate(new Date(createdAt))}</p>
+                <h3 className="text-md font-bold">{title}</h3>
                 {author && (
                     <p className="font-semibold text-slate-700">{author}</p>
                 )}
-                <p>Rs. {price} /-</p>
+                {/* <Link className="" href={"/"}>
+                    View
+                </Link> */}
+                {/* <p>Rs. {price} /-</p> */}
             </div>
             <div>
-                <Drawer>
+                {/* <Drawer>
                     <DrawerTrigger asChild>
                         <Button className="mx-6"> View </Button>
                     </DrawerTrigger>
@@ -110,7 +123,7 @@ export default function BookCard({
                                             <p>
                                                 <strong>Published: </strong>{" "}
                                                 {formatDate(
-                                                    new Date(createdAt)
+                                                    new Date(createdAt),
                                                 )}
                                             </p>
                                         )}
@@ -142,7 +155,7 @@ export default function BookCard({
                             </DrawerDescription>
                         </DrawerHeader>
                     </DrawerContent>
-                </Drawer>
+                </Drawer> */}
             </div>
         </div>
     );
