@@ -56,6 +56,16 @@ const config = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                biscuit: {
+                    100: "#DDA15E",
+                    200: "#bc6c25",
+                },
+                leaf: {
+                    100: "#606c38",
+                    200: "#283618",
+                },
+                offwhite: "#fefae0",
+                // "#fefae0"
             },
             borderRadius: {
                 lg: "var(--radius)",

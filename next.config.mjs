@@ -6,6 +6,10 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "cdn.jsdelivr.net",
             },
+            {
+                protocol: "https",
+                hostname: "images.unsplash.com",
+            },
             // "https://cdn.jsdelivr.net/gh/",
         ],
     },

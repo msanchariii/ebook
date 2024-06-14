@@ -10,8 +10,7 @@ const Item = ({ Links, title }: any) => {
             {Links?.map((link: any) => (
                 <li key={link.name}>
                     <a
-                        className="text-gray-200 hover:text-slate-900 duration-300
-            text-sm cursor-pointer leading-6"
+                        className="cursor-pointer text-sm leading-6 text-gray-200 duration-300 hover:text-slate-900"
                         href={link.link}
                     >
                         {link.name}
@@ -24,7 +23,7 @@ const Item = ({ Links, title }: any) => {
 
 const ItemsContainer = () => {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-5 py-16">
+        <div className="grid grid-cols-1 gap-6 px-5 py-16 sm:grid-cols-3 sm:px-8 lg:grid-cols-4">
             <Item Links={PRODUCTS} title="PRODUCTS" />
             {/* <Item Links={RESOURCES} title="RESOURCES" /> */}
             <Item Links={COMPANY} title="COMPANY" />
@@ -36,32 +35,16 @@ const ItemsContainer = () => {
 const SocialIcons = ({ Icons }: any) => {
     return (
         <div className="text-emerald-400">
-            <span
-                className="p-2 cursor-pointer inline-flex items-center
-          rounded-full bg-gray-700 mx-1.5 text-xl hover:text-gray-100 hover:bg-emerald-950
-          duration-300 "
-            >
+            <span className="mx-1.5 inline-flex cursor-pointer items-center rounded-full bg-gray-700 p-2 text-xl duration-300 hover:bg-emerald-950 hover:text-gray-100">
                 <Facebook />
             </span>
-            <span
-                className="p-2 cursor-pointer inline-flex items-center
-          rounded-full bg-gray-700 mx-1.5 text-xl hover:text-gray-100 hover:bg-emerald-950
-          duration-300 "
-            >
+            <span className="mx-1.5 inline-flex cursor-pointer items-center rounded-full bg-gray-700 p-2 text-xl duration-300 hover:bg-emerald-950 hover:text-gray-100">
                 <Instagram />
             </span>
-            <span
-                className="p-2 cursor-pointer inline-flex items-center
-          rounded-full bg-gray-700 mx-1.5 text-xl hover:text-gray-100 hover:bg-emerald-950
-          duration-300 "
-            >
+            <span className="mx-1.5 inline-flex cursor-pointer items-center rounded-full bg-gray-700 p-2 text-xl duration-300 hover:bg-emerald-950 hover:text-gray-100">
                 <Twitter />
             </span>
-            <span
-                className="p-2 cursor-pointer inline-flex items-center
-          rounded-full bg-gray-700 mx-1.5 text-xl hover:text-gray-100 hover:bg-emerald-950
-          duration-300 "
-            >
+            <span className="mx-1.5 inline-flex cursor-pointer items-center rounded-full bg-gray-700 p-2 text-xl duration-300 hover:bg-emerald-950 hover:text-gray-100">
                 <Mail />
             </span>
         </div>
@@ -105,11 +88,8 @@ export const Icons = [
 const Footer = () => {
     return (
         <footer className="bg-emerald-700 text-white">
-            <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#ffffff19] py-7">
-                <h1
-                    className="lg:text-4xl text-3xl md:mb-0 mb-6 lg:leading-normal font-semibold
-         md:w-2/5"
-                >
+            <div className="bg-[#ffffff19] px-4 py-7 sm:px-12 md:flex md:items-center md:justify-between">
+                <h1 className="mb-6 text-3xl font-semibold md:mb-0 md:w-2/5 lg:text-4xl lg:leading-normal">
                     <span className="text-slate-900">Free</span> until you are
                     ready to launch
                 </h1>
@@ -121,25 +101,18 @@ const Footer = () => {
                     <input
                         type="text"
                         placeholder="Enter Your ph.no"
-                        className="text-gray-800
-           sm:w-72 w-full sm:mr-5 mr-1 lg:mb-0 mb-4 py-2.5 rounded px-2 focus:outline-none"
+                        className="mb-4 mr-1 w-full rounded px-2 py-2.5 text-gray-800 focus:outline-none sm:mr-5 sm:w-72 lg:mb-0"
                     />
                     {/* <Button className="bg-emerald-900 hover:bg-slate-900 duration-300 px-5 py-5  font-[Poppins] text-white md:w-auto w-full">
             Subscribe
           </Button> */}
-                    <button
-                        className="bg-slate-900 hover:bg-emerald-100 hover:text-black duration-300 px-5 py-2.5
-           rounded-lg text-white md:w-auto w-full"
-                    >
+                    <button className="w-full rounded-lg bg-slate-900 px-5 py-2.5 text-white duration-300 hover:bg-emerald-100 hover:text-black md:w-auto">
                         Subscribe
                     </button>
                 </div>
             </div>
             <ItemsContainer />
-            <div
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10
-      text-center pt-2 text-gray-400 text-sm pb-8"
-            >
+            <div className="grid grid-cols-1 gap-10 pb-8 pt-2 text-center text-sm text-gray-400 sm:grid-cols-2 lg:grid-cols-3">
                 <span>© 2020 Appy. All rights reserved.</span>
                 <span>Terms · Privacy Policy</span>
                 <SocialIcons Icons={Icons} />

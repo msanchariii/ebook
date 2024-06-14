@@ -5,7 +5,6 @@ export default function Home() {
     return (
         <>
             <Hero />
-            <div className="w-full h-screen"></div>
         </>
     );
 }

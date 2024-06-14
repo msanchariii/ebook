@@ -16,7 +16,7 @@ export default function CustomerFacingLayout({
     return (
         <>
             <Navbar />
-            <main className="min-h-screen p-4">{children}</main>
+            <main className="min-h-screen py-6 px-12 lg:px-24">{children}</main>
             {/* <Footer /> */}
             <FooterThree />
         </>

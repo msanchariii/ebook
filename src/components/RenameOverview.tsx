@@ -33,7 +33,7 @@ export const ProductOverview: React.FC<ProductOverviewProps> = ({
                         <h2 className="text-3xl font-semibold tracking-widest text-gray-500">
                             {title}
                         </h2>
-                        <h1 className="my-4 text-md font-semibold text-black">
+                        <h1 className="text-md my-4 font-semibold text-black">
                             {author && <> {author} </>}
                         </h1>
                         <p className="leading-relaxed">{description}</p>

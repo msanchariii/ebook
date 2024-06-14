@@ -44,7 +44,7 @@ export default function Example() {
 
     return (
         <div className="relative w-full bg-white">
-            <div className="mx-auto w-full flex items-center justify-between px-2 py-2 sm:px-6 lg:px-8 shadow">
+            <div className="mx-auto flex w-full items-center justify-between px-2 py-2 shadow sm:px-6 lg:px-8">
                 <div className="inline-flex items-center space-x-2">
                     <span>
                         <Image
@@ -61,7 +61,7 @@ export default function Example() {
                             <li key={item.name}>
                                 <Link
                                     href={item.href}
-                                    className="text-sm font-semibold text-gray-800 hover:underline hover:text-emerald-600 hover:font-bold"
+                                    className="text-sm font-semibold text-gray-800 hover:font-bold hover:text-emerald-600 hover:underline"
                                 >
                                     {item.name}
                                 </Link>
@@ -69,20 +69,20 @@ export default function Example() {
                         ))}
                     </ul>
                 </div>
-                <div className="hidden lg:block w-[200px] relative">
+                <div className="relative hidden w-[200px] lg:block">
                     {isMounted && (
-                        <div className="flex flex-end relative float-right">
+                        <div className="flex-end relative float-right flex">
                             <SignedIn>
                                 <div className="flex">
                                     <Button
-                                        className="bg-emerald-700 hover:bg-emerald-600 mx-4 my-1"
+                                        className="mx-4 my-1 bg-emerald-700 hover:bg-emerald-600"
                                         variant="default"
                                     >
                                         <Link href={`/dashboard`}>
                                             Dashboard
                                         </Link>
                                     </Button>
-                                    <div className="p-1 m-1">
+                                    <div className="m-1 p-1">
                                         <UserButton></UserButton>
                                     </div>
                                 </div>
@@ -152,7 +152,7 @@ export default function Example() {
                                 {isMounted && (
                                     <>
                                         <SignedIn>
-                                            <div className="flex my-6">
+                                            <div className="my-6 flex">
                                                 <Button
                                                     className="mx-2 bg-emerald-700 hover:bg-emerald-600"
                                                     variant="default"
@@ -161,7 +161,7 @@ export default function Example() {
                                                         Dashboard
                                                     </Link>
                                                 </Button>
-                                                <div className="p-1 mx-2">
+                                                <div className="mx-2 p-1">
                                                     <UserButton></UserButton>
                                                 </div>
                                             </div>
@@ -169,7 +169,7 @@ export default function Example() {
                                         <SignedOut>
                                             <SignInButton mode="modal">
                                                 <Button
-                                                    className="w-full my-6 mx-2"
+                                                    className="mx-2 my-6 w-full"
                                                     variant="default"
                                                 >
                                                     Sign in
