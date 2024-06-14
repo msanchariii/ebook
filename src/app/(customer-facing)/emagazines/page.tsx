@@ -19,12 +19,15 @@ async function page() {
         mags = responseData.data;
     }
     return (
-        <div className="p-4">
-            <h1 className="text-center text-4xl font-semibold"> Magazines </h1>
+        <div className="p-6">
+            <h1 className="my-6 text-center text-4xl font-semibold">
+                {" "}
+                Magazines{" "}
+            </h1>
             <div className="mx-auto grid grid-cols-2 content-center md:grid-cols-3 lg:grid-cols-5">
-                <div className="col-span-full hidden w-full bg-red-200 p-12 md:block">
-                    Hey
-                </div>
+                {/* <div className="col-span-full hidden w-full bg-red-200 p-12 md:block">
+                    Latest Issue
+                </div> */}
                 {mags &&
                     mags.length > 0 &&
                     mags.map((book: any) => {

@@ -57,7 +57,7 @@ export default function BookCard({
     };
     const router = useRouter();
     const handleClick = (id: string) => {
-        router.push(`/product?type=mag&id=${id}`);
+        router.push(`/product?type=${type}&id=${id}`);
     };
 
     return (

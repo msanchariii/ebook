@@ -11,7 +11,7 @@ async function page() {
         `${process.env.BASE_URL}/api/fetch-all?type=book`,
         {
             cache: "no-store",
-        }
+        },
     );
     const responseData = await response.json();
     const { userId } = auth();
@@ -21,18 +21,18 @@ async function page() {
         books = responseData.data;
     }
     return (
-        <div className="p-4">
-            <h1 className="text-center text-4xl font-semibold">Books</h1>
-            <div>
+        <div className="p-6">
+            <h1 className="my-6 text-center text-4xl font-semibold">Books</h1>
+            <div className="mx-auto grid grid-cols-2 content-center md:grid-cols-3 lg:grid-cols-5">
                 {books &&
                     books.length > 0 &&
                     books.map((book: any) => {
                         // console.log(book);
                         // console.log(book.coverImage);
-
                         return (
-                            <div key={book._id} className="">
+                            <>
                                 <BookCard
+                                    key={book._id}
                                     bookId={book._id}
                                     userId={userId}
                                     title={book.title}
@@ -43,7 +43,43 @@ async function page() {
                                     type="book"
                                     // paymentLink={book.paymentLink}
                                 ></BookCard>
-                            </div>
+                                <BookCard
+                                    key={book._id}
+                                    bookId={book._id}
+                                    userId={userId}
+                                    title={book.title}
+                                    author={book.author}
+                                    price={book.price}
+                                    coverImage={book.coverImage}
+                                    description={book.description}
+                                    type="book"
+                                    // paymentLink={book.paymentLink}
+                                ></BookCard>
+                                <BookCard
+                                    key={book._id}
+                                    bookId={book._id}
+                                    userId={userId}
+                                    title={book.title}
+                                    author={book.author}
+                                    price={book.price}
+                                    coverImage={book.coverImage}
+                                    description={book.description}
+                                    type="book"
+                                    // paymentLink={book.paymentLink}
+                                ></BookCard>
+                                <BookCard
+                                    key={book._id}
+                                    bookId={book._id}
+                                    userId={userId}
+                                    title={book.title}
+                                    author={book.author}
+                                    price={book.price}
+                                    coverImage={book.coverImage}
+                                    description={book.description}
+                                    type="book"
+                                    // paymentLink={book.paymentLink}
+                                ></BookCard>
+                            </>
                         );
                     })}
             </div>

@@ -34,7 +34,7 @@ function Hero() {
                                 Shop Books
                             </Link>
                             <Link
-                                href="/ebooks"
+                                href="/emagazines"
                                 className="mx-2 rounded-full bg-white px-8 py-2 font-bold text-teal-800 transition duration-200 hover:bg-teal-800 hover:text-white"
                             >
                                 Shop Magazines
