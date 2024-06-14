@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { getDocument } from "pdfjs-dist";
 import "pdfjs-dist/build/pdf.worker.entry";
 
-const PdfViewer = ({ pdfUrl }) => {
+const PdfViewer = ({ pdfUrl }: { pdfUrl: string }) => {
     const canvasRef = useRef(null);
     const [pdf, setPdf] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
