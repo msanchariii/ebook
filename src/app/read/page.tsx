@@ -1,4 +1,5 @@
 import ReadBook from "@/components/Book/ReadBook";
+import PdfViewer from "@/components/PdfViewer/PdfViewer";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
@@ -34,7 +35,13 @@ async function page({
             ? responseData.data.fileLocation
             : null;
 
-        return <div>{file && <ReadBook file={file} />}</div>;
+        // return <div>{file && <ReadBook file={file} />}</div>;
+        const pdfUrl = "/sample.pdf";
+        return (
+            <div className="flex min-h-screen w-full flex-col items-center justify-center bg-gray-100 p-4">
+                <PdfViewer pdfUrl={file} />
+            </div>
+        );
     } catch (error) {
         console.error("Error fetching data:", error);
         return <div>Error fetching data</div>;

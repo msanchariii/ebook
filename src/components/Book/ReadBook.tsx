@@ -11,7 +11,7 @@ import { Button } from "../ui/button";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "pdfjs-dist/build/pdf.worker.min.js",
-    import.meta.url
+    import.meta.url,
 ).toString();
 
 const options = {
@@ -45,66 +45,69 @@ const ReadBook = ({ file }: { file: string }) => {
             setNumPages(nextNumPages);
             setPageNumber(1); // Reset to the first page on new document load
         },
-        []
+        [],
     );
 
     const goToPrevPage = useCallback(
         () => setPageNumber((prevPage) => Math.max(prevPage - 1, 1)),
-        []
+        [],
     );
 
     const goToNextPage = useCallback(
         () =>
             setPageNumber((prevPage) => Math.min(prevPage + 1, numPages || 1)),
-        [numPages]
+        [numPages],
     );
 
     const pdfComponent = useMemo(
         () => (
-            <div className="mx-auto shadow-lg w-full min-h-screen">
+            <div className="mx-auto w-full shadow-lg">
                 <Document
                     file={file}
                     onLoadSuccess={onDocumentLoadSuccess}
                     options={options}
                 >
                     <Page
-                        className={``}
+                        // className={``}
                         pageNumber={pageNumber}
                         width={
                             containerWidth
                                 ? Math.min(containerWidth, maxWidth)
                                 : maxWidth
                         }
+                        // height={10}
                     />
                 </Document>
             </div>
         ),
-        [file, onDocumentLoadSuccess, pageNumber, containerWidth]
+        [file, onDocumentLoadSuccess, pageNumber, containerWidth],
     );
 
     return (
-        <div className="w-5/6 lg:w-2/3 max-w-7xl mx-auto ">
+        <div className="mx-auto w-full max-w-7xl lg:w-2/3">
             <div className="mx-auto">
                 <div className="" ref={setContainerRef}>
                     {pdfComponent}
-                    <div className="navigation w-full flex justify-between my-6 bg-emerald-500/50 rounded p-4">
-                        <Button
-                            onClick={goToPrevPage}
-                            disabled={pageNumber <= 1}
-                        >
-                            Previous
-                        </Button>
-                        <div>
-                            <span>
-                                Page {pageNumber} of {numPages}
-                            </span>
+                    <div className="fixed bottom-0 w-full">
+                        <div className="navigation mb-2 flex w-full justify-between rounded bg-emerald-500/50 p-4">
+                            <Button
+                                onClick={goToPrevPage}
+                                disabled={pageNumber <= 1}
+                            >
+                                Previous
+                            </Button>
+                            <div>
+                                <span>
+                                    Page {pageNumber} of {numPages}
+                                </span>
+                            </div>
+                            <Button
+                                onClick={goToNextPage}
+                                disabled={pageNumber >= (numPages || 1)}
+                            >
+                                Next
+                            </Button>
                         </div>
-                        <Button
-                            onClick={goToNextPage}
-                            disabled={pageNumber >= (numPages || 1)}
-                        >
-                            Next
-                        </Button>
                     </div>
                 </div>
             </div>

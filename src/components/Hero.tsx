@@ -15,9 +15,8 @@ export function Hero() {
                         People who care about your books
                     </h1>
                     <p className="mt-8 text-lg text-gray-700">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Consequatur modi blanditiis dolores quasi eaque
-                        explicabo!
+                        Discover a world of knowledge and entertainment with our
+                        extensive collection of eBooks.
                     </p>
                     <form action="" className="mt-8 flex items-start space-x-2">
                         <div>
